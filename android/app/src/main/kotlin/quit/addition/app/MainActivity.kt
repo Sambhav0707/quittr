@@ -1,4 +1,4 @@
-package quit.addition.app.quittr
+package quit.addition.app
 
 import io.flutter.embedding.android.FlutterActivity
 

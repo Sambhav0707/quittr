@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1019009831264",
+    "project_id": "quittr-22220",
+    "storage_bucket": "quittr-22220.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1019009831264:android:4c061c4607cb384162ce05",
+        "android_client_info": {
+          "package_name": "quit.addition.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBD90xccKsSAbX5nuD3_T7BApxjWF5exZA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

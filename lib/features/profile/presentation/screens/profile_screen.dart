@@ -35,7 +35,12 @@ class ProfileScreen extends StatelessWidget {
             return CustomScrollView(
               slivers: [
                 SliverAppBar(
-                  title: Text('Profile'),
+                  title: Text('You'),
+                  centerTitle: false,
+                  titleTextStyle: Theme.of(context)
+                      .textTheme
+                      .titleLarge
+                      ?.copyWith(fontWeight: FontWeight.bold),
                   actions: [
                     IconButton(
                       icon: const Icon(Icons.settings_outlined),

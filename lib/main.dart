@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:quittr/core/bloc_observer.dart';
 import 'package:quittr/core/injection_container.dart' as di;
 import 'package:quittr/features/auth/presentation/bloc/auth_bloc.dart';
@@ -29,14 +30,67 @@ class QuittrApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = ColorScheme.fromSeed(
+      seedColor: Colors.deepPurple,
+      brightness: MediaQuery.platformBrightnessOf(context),
+    );
+
+    final textTheme = GoogleFonts.poppinsTextTheme(
+      ThemeData(colorScheme: colorScheme).textTheme,
+    );
+
     return BlocProvider(
       create: (_) => AuthBloc(authRepository: di.sl()),
       child: MaterialApp(
         title: 'Quittr',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          colorScheme: colorScheme,
           useMaterial3: true,
+          textTheme: textTheme,
+          appBarTheme: AppBarTheme(
+            titleTextStyle: textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          cardTheme: CardTheme(
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+          ),
+          dialogTheme: DialogTheme(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(28),
+            ),
+            titleTextStyle: textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+        darkTheme: ThemeData(
+          colorScheme: colorScheme.copyWith(brightness: Brightness.dark),
+          useMaterial3: true,
+          textTheme: textTheme,
+          appBarTheme: AppBarTheme(
+            titleTextStyle: textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          cardTheme: CardTheme(
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+          ),
+          dialogTheme: DialogTheme(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(28),
+            ),
+            titleTextStyle: textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.w600,
+            ),
+          ),
         ),
         home: const AuthWrapper(),
         routes: {

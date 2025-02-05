@@ -19,3 +19,12 @@ class UpdateProfile extends ProfileEvent {
 }
 
 class SignOut extends ProfileEvent {}
+
+class UpdateProfilePhotoEvent extends ProfileEvent {
+  final String imagePath;
+
+  const UpdateProfilePhotoEvent(this.imagePath);
+
+  @override
+  List<Object> get props => [imagePath];
+}

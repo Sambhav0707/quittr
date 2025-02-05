@@ -4,11 +4,13 @@ class ProfileState extends Equatable {
   final Profile? profile;
   final bool isLoading;
   final String? errorMessage;
+  final bool isUploadingPhoto;
 
   const ProfileState._({
     this.profile,
     this.isLoading = false,
     this.errorMessage,
+    this.isUploadingPhoto = false,
   });
 
   const ProfileState.initial() : this._();
@@ -20,14 +22,17 @@ class ProfileState extends Equatable {
     Profile? profile,
     bool? isLoading,
     String? errorMessage,
+    bool? isUploadingPhoto,
   }) {
     return ProfileState._(
       profile: profile ?? this.profile,
       isLoading: isLoading ?? this.isLoading,
       errorMessage: errorMessage ?? this.errorMessage,
+      isUploadingPhoto: isUploadingPhoto ?? this.isUploadingPhoto,
     );
   }
 
   @override
-  List<Object?> get props => [profile, isLoading, errorMessage];
+  List<Object?> get props =>
+      [profile, isLoading, errorMessage, isUploadingPhoto];
 }

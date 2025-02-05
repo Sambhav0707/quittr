@@ -5,5 +5,5 @@ import '../entities/profile.dart';
 abstract class ProfileRepository {
   Profile? get currentProfile;
   Future<Either<Failure, Profile>> updateProfile(Profile profile);
-  Future<Either<Failure, String>> uploadProfilePhoto(String filePath);
+  Future<Either<Failure, void>> updateProfilePhoto(String imagePath);
 }

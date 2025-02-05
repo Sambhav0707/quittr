@@ -8,6 +8,8 @@ import 'package:quittr/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:quittr/features/auth/presentation/screens/auth_wrapper.dart';
 import 'package:quittr/features/auth/presentation/screens/signup_screen.dart';
 import 'package:quittr/features/auth/presentation/screens/forgot_password_screen.dart';
+import 'package:quittr/features/profile/presentation/screens/edit_profile_screen.dart';
+import 'package:quittr/features/settings/presentation/screens/settings_screen.dart';
 import 'package:quittr/firebase_options.dart';
 
 void main() async {
@@ -96,6 +98,8 @@ class QuittrApp extends StatelessWidget {
         routes: {
           '/signup': (context) => const SignupScreen(),
           '/forgot-password': (context) => const ForgotPasswordScreen(),
+          '/edit-profile': (context) => const EditProfileScreen(),
+          '/settings': (context) => const SettingsScreen(),
         },
       ),
     );

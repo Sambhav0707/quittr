@@ -7,6 +7,9 @@ import '../features/auth/data/repositories/auth_repository_impl.dart';
 import '../features/auth/domain/repositories/auth_repository.dart';
 import '../features/profile/data/repositories/profile_repository_impl.dart';
 import '../features/profile/domain/repositories/profile_repository.dart';
+import '../features/profile/domain/usecases/update_profile_photo.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:quittr/core/services/image_picker_service.dart';
 
 final sl = GetIt.instance;
 
@@ -33,4 +36,13 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GoogleSignIn());
   sl.registerLazySingleton(() => FirebaseFirestore.instance);
   sl.registerLazySingleton(() => FirebaseStorage.instance);
+
+  // Services
+  sl.registerLazySingleton<ImagePickerService>(
+    () => ImagePickerServiceImpl(picker: sl()),
+  );
+  sl.registerLazySingleton(() => ImagePicker());
+
+  // Use cases
+  sl.registerLazySingleton(() => UpdateProfilePhoto(sl()));
 }

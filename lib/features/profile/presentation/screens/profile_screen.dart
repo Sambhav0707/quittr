@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quittr/core/injection_container.dart';
 import 'package:quittr/features/auth/domain/repositories/auth_repository.dart';
 import 'package:quittr/features/profile/domain/repositories/profile_repository.dart';
+import 'package:quittr/features/profile/domain/usecases/update_profile_photo.dart';
 import '../bloc/profile_bloc.dart';
+import '../widgets/profile_photo_picker.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -14,6 +16,7 @@ class ProfileScreen extends StatelessWidget {
       create: (context) => ProfileBloc(
         profileRepository: sl<ProfileRepository>(),
         authRepository: sl<AuthRepository>(),
+        updateProfilePhoto: sl<UpdateProfilePhoto>(),
       )..add(LoadProfile()),
       child: Scaffold(
         backgroundColor: Theme.of(context).colorScheme.surface,
@@ -31,6 +34,11 @@ class ProfileScreen extends StatelessWidget {
             if (profile == null) {
               return const Center(child: Text('No profile data'));
             }
+
+            final String displayName =
+                (profile.displayName?.isNotEmpty ?? false)
+                    ? profile.displayName!
+                    : "Anonymous";
 
             return CustomScrollView(
               slivers: [
@@ -77,8 +85,7 @@ class ProfileScreen extends StatelessWidget {
                                     : null,
                                 child: profile.photoUrl == null
                                     ? Text(
-                                        profile.displayName?[0].toUpperCase() ??
-                                            '?',
+                                        displayName[0],
                                         style: TextStyle(
                                           fontSize: 40,
                                           fontWeight: FontWeight.w600,
@@ -90,6 +97,18 @@ class ProfileScreen extends StatelessWidget {
                                     : null,
                               ),
                             ),
+                            if (state.isUploadingPhoto)
+                              Positioned.fill(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.black.withOpacity(0.5),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: const Center(
+                                    child: CircularProgressIndicator(),
+                                  ),
+                                ),
+                              ),
                             Positioned(
                               bottom: 0,
                               right: 0,
@@ -109,9 +128,8 @@ class ProfileScreen extends StatelessWidget {
                                   icon: const Icon(Icons.camera_alt),
                                   color:
                                       Theme.of(context).colorScheme.onPrimary,
-                                  onPressed: () {
-                                    // TODO: Implement photo upload
-                                  },
+                                  onPressed: () =>
+                                      showProfilePhotoPicker(context),
                                 ),
                               ),
                             ),
@@ -119,7 +137,7 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 24),
                         Text(
-                          profile.displayName ?? 'Anonymous',
+                          displayName,
                           style: Theme.of(context)
                               .textTheme
                               .headlineSmall

@@ -71,4 +71,35 @@ class ProfileRepositoryImpl implements ProfileRepository {
       return Left(AuthFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> updateProfilePhoto(String imagePath) async {
+    try {
+      final user = _auth.currentUser;
+      if (user == null) {
+        return const Left(AuthFailure('User not authenticated'));
+      }
+
+      // Upload to Firebase Storage
+      final file = File(imagePath);
+      final ref = _storage.ref().child('profile_photos/${user.uid}');
+
+      // Upload with metadata to ensure proper content type
+      final metadata = SettableMetadata(
+        contentType: 'image/jpeg',
+        customMetadata: {'picked': 'true'},
+      );
+      await ref.putFile(file, metadata);
+
+      // Get download URL
+      final downloadUrl = await ref.getDownloadURL();
+
+      // Update user profile
+      await user.updatePhotoURL(downloadUrl);
+
+      return const Right(null);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }

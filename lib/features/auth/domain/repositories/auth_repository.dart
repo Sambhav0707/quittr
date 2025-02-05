@@ -10,4 +10,5 @@ abstract class AuthRepository {
   Future<Either<Failure, void>> forgotPassword(String email);
   Future<Either<Failure, void>> signOut();
   Stream<User?> get authStateChanges;
+  User? get currentUser;
 }

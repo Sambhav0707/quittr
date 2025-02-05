@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quittr/core/bloc_observer.dart';
 import 'package:quittr/core/injection_container.dart' as di;
 import 'package:quittr/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:quittr/features/auth/presentation/screens/login_screen.dart';
+import 'package:quittr/features/auth/presentation/screens/auth_wrapper.dart';
 import 'package:quittr/features/auth/presentation/screens/signup_screen.dart';
 import 'package:quittr/features/auth/presentation/screens/forgot_password_screen.dart';
 import 'package:quittr/firebase_options.dart';
@@ -38,9 +38,8 @@ class QuittrApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        initialRoute: '/login',
+        home: const AuthWrapper(),
         routes: {
-          '/login': (context) => const LoginScreen(),
           '/signup': (context) => const SignupScreen(),
           '/forgot-password': (context) => const ForgotPasswordScreen(),
         },

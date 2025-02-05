@@ -127,4 +127,17 @@ class AuthRepositoryImpl implements AuthRepository {
       return Left(AuthFailure(e.message ?? 'Sign out failed'));
     }
   }
+
+  @override
+  User? get currentUser {
+    final firebaseUser = _firebaseAuth.currentUser;
+    if (firebaseUser == null) return null;
+
+    return User(
+      id: firebaseUser.uid,
+      email: firebaseUser.email,
+      name: firebaseUser.displayName,
+      photoUrl: firebaseUser.photoURL,
+    );
+  }
 }

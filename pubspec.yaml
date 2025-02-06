@@ -59,6 +59,13 @@ dependencies:
   # New dependency
   image_picker: ^1.0.7
 
+  # Add these
+  sqflite: ^2.3.2
+  path: ^1.8.3
+  path_provider: ^2.1.2  # keep this if you already have it
+
+  rxdart: ^0.27.7
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -70,6 +77,8 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
   change_app_package_name: ^1.4.0
+
+  build_runner: ^2.4.8
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

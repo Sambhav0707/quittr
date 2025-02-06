@@ -176,8 +176,12 @@ class ProfileScreen extends StatelessWidget {
                         _ProfileMenuItem(
                           icon: Icons.edit_outlined,
                           title: 'Edit Profile',
-                          onTap: () =>
-                              Navigator.pushNamed(context, '/edit-profile'),
+                          onTap: () async {
+                            await Navigator.pushNamed(context, '/edit-profile');
+                            if (context.mounted) {
+                              context.read<ProfileBloc>().add(LoadProfile());
+                            }
+                          },
                         ),
                         Divider(
                           height: 1,
@@ -200,39 +204,7 @@ class ProfileScreen extends StatelessWidget {
                           title: 'Sign Out',
                           textColor: Theme.of(context).colorScheme.error,
                           iconColor: Theme.of(context).colorScheme.error,
-                          onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (dialogContext) => AlertDialog(
-                                title: const Text('Sign Out'),
-                                content: const Text(
-                                  'Are you sure you want to sign out?',
-                                ),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.pop(dialogContext),
-                                    child: const Text('Cancel'),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      context
-                                          .read<ProfileBloc>()
-                                          .add(SignOut());
-                                      Navigator.pop(dialogContext);
-                                    },
-                                    child: Text(
-                                      'Sign Out',
-                                      style: TextStyle(
-                                        color:
-                                            Theme.of(context).colorScheme.error,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
+                          onTap: () => _showSignOutDialog(context),
                         ),
                       ],
                     ),
@@ -242,6 +214,29 @@ class ProfileScreen extends StatelessWidget {
             );
           },
         ),
+      ),
+    );
+  }
+
+  void _showSignOutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Sign Out'),
+        content: const Text('Are you sure you want to sign out?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () {
+              context.read<ProfileBloc>().add(SignOut());
+              Navigator.pop(context);
+            },
+            child: const Text('Sign Out'),
+          ),
+        ],
       ),
     );
   }

@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           NavigationDestination(
             icon: Icon(Icons.library_books),
-            label: 'Resources',
+            label: 'Library',
           ),
           NavigationDestination(
             icon: Icon(Icons.person),

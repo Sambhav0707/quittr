@@ -54,25 +54,6 @@ class ProfileRepositoryImpl implements ProfileRepository {
   }
 
   @override
-  Future<Either<Failure, String>> uploadProfilePhoto(String filePath) async {
-    try {
-      final file = File(filePath);
-      final user = _auth.currentUser;
-      if (user == null) {
-        return const Left(AuthFailure('User not authenticated'));
-      }
-
-      final ref = _storage.ref().child('profile_photos/${user.uid}');
-      await ref.putFile(file);
-      final downloadUrl = await ref.getDownloadURL();
-
-      return Right(downloadUrl);
-    } catch (e) {
-      return Left(AuthFailure(e.toString()));
-    }
-  }
-
-  @override
   Future<Either<Failure, void>> updateProfilePhoto(String imagePath) async {
     try {
       final user = _auth.currentUser;

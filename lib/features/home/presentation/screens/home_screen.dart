@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quittr/features/relapse_tracker/presentation/screens/relapse_tracker_screen.dart';
 import 'package:quittr/features/profile/presentation/screens/profile_screen.dart';
+import 'package:quittr/features/library/presentation/screens/library_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,7 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> _screens = [
     const RelapseTrackerScreen(),
     const Placeholder(), // Community tab
-    const Placeholder(), // Resources tab
+    const LibraryScreen(), // Library tab
     const ProfileScreen(), // Profile tab
   ];
 

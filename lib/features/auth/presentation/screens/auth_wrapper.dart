@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quittr/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:quittr/features/home/presentation/screens/home_screen.dart';
-import 'package:quittr/features/onboarding/presentation/screens/quiz/calculating_quiz_result_screen.dart';
 import 'package:quittr/features/onboarding/presentation/screens/quiz/get_started_screen.dart';
 
 class AuthWrapper extends StatelessWidget {
@@ -23,9 +22,7 @@ class AuthWrapper extends StatelessWidget {
           if (state.user != null) {
             return const HomeScreen();
           }
-          return const CalculatingQuizResultScreen(
-            userInfo: {},
-          );
+          return const GetStartedScreen();
         },
       ),
     );

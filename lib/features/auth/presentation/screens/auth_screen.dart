@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -35,7 +36,8 @@ class AuthScreen extends StatelessWidget {
             );
           }
           if (state.user != null) {
-            _startQuiz(context);
+            Navigator.pushNamed(context, '/home');
+            // _startQuiz(context);
           }
         },
         child: Stack(

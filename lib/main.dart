@@ -8,6 +8,7 @@ import 'package:quittr/core/presentation/theme/theme.dart';
 import 'package:quittr/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:quittr/features/auth/presentation/screens/auth_wrapper.dart';
 import 'package:quittr/features/auth/presentation/screens/forgot_password_screen.dart';
+import 'package:quittr/features/home/presentation/screens/home_screen.dart';
 import 'package:quittr/features/profile/presentation/screens/edit_profile_screen.dart';
 import 'package:quittr/features/settings/presentation/screens/settings_screen.dart';
 import 'package:quittr/firebase_options.dart';
@@ -51,6 +52,7 @@ class QuittrApp extends StatelessWidget {
             themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
             home: const AuthWrapper(),
             routes: {
+              '/home': (context) => const HomeScreen(),
               '/auth': (context) => const AuthScreen(),
               '/email-auth': (context) => const EmailAuthScreen(),
               '/forgot-password': (context) => const ForgotPasswordScreen(),

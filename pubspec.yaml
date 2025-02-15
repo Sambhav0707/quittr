@@ -60,7 +60,7 @@ dependencies:
   image_picker: ^1.0.7
 
   # Add these
-  sqflite: ^2.3.2
+  sqflite: ^2.3.0
   path: ^1.8.3
   path_provider: ^2.1.2  # keep this if you already have it
 

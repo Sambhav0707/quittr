@@ -38,7 +38,7 @@ class ProfileScreen extends StatelessWidget {
             final String displayName =
                 (profile.displayName?.isNotEmpty ?? false)
                     ? profile.displayName!
-                    : "Anonymous";
+                    : "Username";
 
             return CustomScrollView(
               slivers: [
@@ -221,7 +221,7 @@ class ProfileScreen extends StatelessWidget {
   void _showSignOutDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
+      builder: (dialogContext) => AlertDialog(
         title: const Text('Sign Out'),
         content: const Text('Are you sure you want to sign out?'),
         actions: [

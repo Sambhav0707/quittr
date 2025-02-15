@@ -22,10 +22,11 @@ class AuthButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      child: ElevatedButton(
+      child: FilledButton(
         onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: backgroundColor,
+          elevation: 2,
           foregroundColor: textColor,
           padding: const EdgeInsets.symmetric(vertical: 16),
         ),

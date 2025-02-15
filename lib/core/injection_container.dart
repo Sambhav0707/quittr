@@ -15,6 +15,10 @@ import 'package:quittr/features/settings/presentation/bloc/settings_bloc.dart';
 import 'package:quittr/core/database/database_helper.dart';
 import 'package:quittr/features/settings/data/repositories/settings_repository_impl.dart';
 import 'package:quittr/features/settings/domain/repositories/settings_repository.dart';
+import 'package:quittr/features/onboarding/data/datasources/quiz_local_data_source.dart';
+import 'package:quittr/features/onboarding/data/repositories/quiz_repository_impl.dart';
+import 'package:quittr/features/onboarding/domain/repositories/quiz_repository.dart';
+import 'package:quittr/features/onboarding/presentation/bloc/quiz_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -64,4 +68,13 @@ Future<void> init() async {
 
   // Cubits
   sl.registerFactory(() => ThemeCubit(settingsRepository: sl()));
+
+  // Quiz Feature
+  sl.registerFactory(() => QuizBloc(repository: sl()));
+  sl.registerLazySingleton<QuizRepository>(
+    () => QuizRepositoryImpl(localDataSource: sl()),
+  );
+  sl.registerLazySingleton<QuizLocalDataSource>(
+    () => QuizLocalDataSourceImpl(),
+  );
 }

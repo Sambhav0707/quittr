@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconly/iconly.dart';
 import '../bloc/auth_bloc.dart';
 import '../widgets/auth_button.dart';
 import '../widgets/custom_text_field.dart';
@@ -33,7 +34,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Forgot Password'),
+        title: const Text('Reset Password'),
       ),
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
@@ -53,22 +54,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         },
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Form(
               key: _formKey,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const Text(
-                    'Reset Password',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 16),
                   const Text(
                     'Enter your email address and we will send you instructions to reset your password.',
                     textAlign: TextAlign.center,
@@ -77,6 +69,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   const SizedBox(height: 32),
                   CustomTextField(
                     label: 'Email',
+                    prefixIcon: Icon(IconlyLight.message),
                     controller: _emailController,
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {

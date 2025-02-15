@@ -30,7 +30,7 @@ class LibraryScreen extends StatelessWidget {
                   onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => const ArticlesScreen(),
+                      builder: (_) => ArticlesScreen(),
                     ),
                   ),
                 ),

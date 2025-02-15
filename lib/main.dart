@@ -7,12 +7,13 @@ import 'package:quittr/core/injection_container.dart' as di;
 import 'package:quittr/core/presentation/theme/theme.dart';
 import 'package:quittr/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:quittr/features/auth/presentation/screens/auth_wrapper.dart';
-import 'package:quittr/features/auth/presentation/screens/signup_screen.dart';
 import 'package:quittr/features/auth/presentation/screens/forgot_password_screen.dart';
 import 'package:quittr/features/profile/presentation/screens/edit_profile_screen.dart';
 import 'package:quittr/features/settings/presentation/screens/settings_screen.dart';
 import 'package:quittr/firebase_options.dart';
 import 'package:quittr/core/presentation/theme/cubit/theme_cubit.dart';
+import 'package:quittr/features/auth/presentation/screens/auth_screen.dart';
+import 'package:quittr/features/auth/presentation/screens/email_auth_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -50,7 +51,8 @@ class QuittrApp extends StatelessWidget {
             themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
             home: const AuthWrapper(),
             routes: {
-              '/signup': (context) => const SignupScreen(),
+              '/auth': (context) => const AuthScreen(),
+              '/email-auth': (context) => const EmailAuthScreen(),
               '/forgot-password': (context) => const ForgotPasswordScreen(),
               '/edit-profile': (context) => const EditProfileScreen(),
               '/settings': (context) => const SettingsScreen(),

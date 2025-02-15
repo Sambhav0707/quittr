@@ -65,6 +65,9 @@ dependencies:
   path_provider: ^2.1.2  # keep this if you already have it
 
   rxdart: ^0.27.7
+  iconly: ^1.0.1
+
+  flutter_inapp_purchase: ^5.6.1
 
 dev_dependencies:
   flutter_test:
@@ -124,3 +127,4 @@ flutter:
 
   assets:
     - assets/illustrations/
+    - assets/data/

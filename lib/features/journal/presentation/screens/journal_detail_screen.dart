@@ -15,10 +15,8 @@ class JournalDetailScreen extends StatelessWidget {
     final theme = Theme.of(context);
     
     return Scaffold(
-      backgroundColor: Colors.grey[50],
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.white,
         title: const Text(
           'Journal Entry',
           style: TextStyle(

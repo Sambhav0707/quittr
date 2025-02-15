@@ -18,30 +18,36 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
-  final List<Map<String, String>> _onboardingData = [
+  final List<Map> _onboardingData = [
     {
-      'title': 'Welcome to Your Journey',
-      'description':
-          'Based on your responses, we\'ve created a personalized recovery plan just for you.',
-      'image': 'assets/illustrations/onboarding_1.svg',
+      "title": "Porn is a drug",
+      "description":
+          "Using porn releases a chemical in the brain called dopamine. This chemical makes you feel good- it's why you feel pleasure when you watch porn.",
+      "backgroundColor": Color(0xffd9042a),
     },
     {
-      'title': 'Track Your Progress',
-      'description':
-          'Monitor your streaks, identify triggers, and celebrate your victories along the way.',
-      'image': 'assets/illustrations/onboarding_2.svg',
+      "title": "Porn destroys relationships",
+      "description":
+          "Porn reduces your hunger for a real relationship and replaces it with the hunger for more porn.",
+      "backgroundColor": Color(0xffd9042a),
     },
     {
-      'title': 'Community Support',
-      'description':
-          'You\'re not alone. Connect with others who understand your journey and share experiences.',
-      'image': 'assets/illustrations/onboarding_3.svg',
+      "title": "Porn shatters sex drive",
+      "description":
+          "More than 50% of porn addicts have reported a decrease in libido, loss of interest in real sex, and an overall decrease in their sex drive.",
+      "backgroundColor": Color(0xffd9042a),
     },
     {
-      'title': 'Resources at Hand',
-      'description':
-          'Access articles, meditation guides, and expert advice whenever you need them.',
-      'image': 'assets/illustrations/onboarding_4.svg',
+      "title": "Feeling unhappy?",
+      "description":
+          "An elevated dopamine level means you need more dopamine to feel good. This is why so many heavy porn users report feeling depresed, unmotivated, and anti-social.",
+      "backgroundColor": Color(0xffd9042a),
+    },
+    {
+      "title": "Path to Recovery",
+      "description":
+          "Recovery is possible. By abstaining from porn, your brain can reset its dopamine sensitivity, leading to healthier relationships and improved well-being.",
+      "backgroundColor": Color(0xffd9042a),
     },
   ];
 
@@ -64,6 +70,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: _onboardingData[_currentPage]['backgroundColor'],
       body: SafeArea(
         child: Column(
           children: [
@@ -79,8 +86,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // TODO: Add SVG illustration here
                         const Spacer(),
+                        Image.asset(
+                          'assets/images/onboarding/onboarding_${index + 1}.png',
+                          width: MediaQuery.sizeOf(context).width * 0.65,
+                        ),
+                        SizedBox(
+                          height: MediaQuery.sizeOf(context).height * 0.025,
+                        ),
                         Text(
                           data['title']!,
                           style: Theme.of(context)
@@ -91,7 +104,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                   fontWeight: FontWeight.w600,
                                 ).fontFamily,
                                 fontWeight: FontWeight.w900,
-                                color: Theme.of(context).colorScheme.primary,
+                                color: Colors.white,
                               ),
                           textAlign: TextAlign.center,
                         ),
@@ -100,9 +113,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           data['description']!,
                           style:
                               Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSurfaceVariant,
+                                    color: Colors.white,
                                   ),
                           textAlign: TextAlign.center,
                         ),
@@ -128,11 +139,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: _currentPage == index
-                              ? Theme.of(context).colorScheme.primary
-                              : Theme.of(context)
-                                  .colorScheme
-                                  .primary
-                                  .withOpacity(0.2),
+                              ? Colors.white
+                              : Colors.grey.shade800,
                         ),
                       ),
                     ),
@@ -145,11 +153,30 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         horizontal: 48,
                         vertical: 16,
                       ),
+                      backgroundColor: Colors.white,
+                      foregroundColor: Colors.black,
+                      textStyle: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    child: Text(
-                      _currentPage == _onboardingData.length - 1
-                          ? 'Get Started'
-                          : 'Next',
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          _currentPage == _onboardingData.length - 1
+                              ? 'Get Started'
+                              : 'Next',
+                        ),
+                        if (_currentPage != _onboardingData.length - 1)
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8),
+                            child: const Icon(
+                              Icons.arrow_forward,
+                              color: Colors.black,
+                            ),
+                          )
+                      ],
                     ),
                   ),
                 ],

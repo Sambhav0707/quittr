@@ -128,3 +128,5 @@ flutter:
   assets:
     - assets/illustrations/
     - assets/data/
+    - assets/images/
+    - assets/images/onboarding/

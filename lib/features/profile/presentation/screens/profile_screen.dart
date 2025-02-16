@@ -4,6 +4,7 @@ import 'package:quittr/core/injection_container.dart';
 import 'package:quittr/features/auth/domain/repositories/auth_repository.dart';
 import 'package:quittr/features/profile/domain/repositories/profile_repository.dart';
 import 'package:quittr/features/profile/domain/usecases/update_profile_photo.dart';
+import 'package:quittr/features/reason/presentation/screens/reason_list_screen.dart';
 import '../bloc/profile_bloc.dart';
 import '../widgets/profile_photo_picker.dart';
 
@@ -189,10 +190,12 @@ class ProfileScreen extends StatelessWidget {
                           color: Theme.of(context).colorScheme.outlineVariant,
                         ),
                         _ProfileMenuItem(
-                          icon: Icons.settings_outlined,
-                          title: 'Settings',
-                          onTap: () =>
-                              Navigator.pushNamed(context, '/settings'),
+                          icon: Icons.lightbulb_outline,
+                          title: 'Reason for Change',
+                          onTap: () => Navigator.pushNamed(
+                            context,
+                            '/reason-list',
+                          ),
                         ),
                         Divider(
                           height: 1,
@@ -200,13 +203,55 @@ class ProfileScreen extends StatelessWidget {
                           color: Theme.of(context).colorScheme.outlineVariant,
                         ),
                         _ProfileMenuItem(
-                          icon: Icons.logout_outlined,
-                          title: 'Sign Out',
-                          textColor: Theme.of(context).colorScheme.error,
-                          iconColor: Theme.of(context).colorScheme.error,
-                          onTap: () => _showSignOutDialog(context),
+                          icon: Icons.book_outlined,
+                          title: 'Recovery Journal',
+                          onTap: () => Navigator.pushNamed(
+                            context,
+                            '/recovery-journal',
+                          ),
                         ),
                       ],
+                    ),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 20,
+                      right: 20,
+                      top: 16,
+                      bottom: 24,
+                    ),
+                    child: Card(
+                      elevation: 0,
+                      clipBehavior: Clip.antiAlias,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        side: BorderSide(
+                          color: Theme.of(context).colorScheme.outlineVariant,
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          _ProfileMenuItem(
+                            icon: Icons.settings_outlined,
+                            title: 'Settings',
+                            onTap: () => Navigator.pushNamed(context, '/settings'),
+                          ),
+                          Divider(
+                            height: 1,
+                            indent: 56,
+                            color: Theme.of(context).colorScheme.outlineVariant,
+                          ),
+                          _ProfileMenuItem(
+                            icon: Icons.logout_outlined,
+                            title: 'Sign Out',
+                            textColor: Theme.of(context).colorScheme.error,
+                            iconColor: Theme.of(context).colorScheme.error,
+                            onTap: () => _showSignOutDialog(context),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

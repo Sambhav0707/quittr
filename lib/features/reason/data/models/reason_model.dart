@@ -1,28 +1,26 @@
-class ReasonModel {
-  final int? id;
-  final String reason;
-  final DateTime createdAt;
+import '../../domain/entities/reason.dart';
 
-  ReasonModel({
-    this.id,
-    required this.reason,
-    required this.createdAt,
+class ReasonModel extends Reason {
+  const ReasonModel({
+    super.id,
+    required super.reason,
+    required super.createdAt,
   });
-
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'reason': reason,
-      'created_at': createdAt.toIso8601String(),
-    };
-  }
 
   factory ReasonModel.fromMap(Map<String, dynamic> map) {
     return ReasonModel(
-      id: map['id'],
-      reason: map['reason'],
-      createdAt: DateTime.parse(map['created_at']),
+      id: map['id'] as int?,
+      reason: map['reason'] as String,
+      createdAt: DateTime.parse(map['created_at'] as String),
     );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      if (id != null) 'id': id,
+      'reason': reason,
+      'created_at': createdAt.toIso8601String(),
+    };
   }
 
   ReasonModel copyWith({
@@ -36,4 +34,4 @@ class ReasonModel {
       createdAt: createdAt ?? this.createdAt,
     );
   }
-} 
+}

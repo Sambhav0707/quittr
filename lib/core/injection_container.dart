@@ -19,6 +19,10 @@ import 'package:quittr/features/onboarding/data/datasources/quiz_local_data_sour
 import 'package:quittr/features/onboarding/data/repositories/quiz_repository_impl.dart';
 import 'package:quittr/features/onboarding/domain/repositories/quiz_repository.dart';
 import 'package:quittr/features/onboarding/presentation/bloc/quiz_bloc.dart';
+import 'package:quittr/features/journal/domain/usecases/get_journal_entries.dart';
+import 'package:quittr/features/journal/domain/usecases/add_journal_entry.dart';
+import '../features/journal/data/repositories/journal_repository_impl.dart';
+import '../features/journal/domain/repositories/journal_repository.dart';
 
 final sl = GetIt.instance;
 
@@ -76,5 +80,12 @@ Future<void> init() async {
   );
   sl.registerLazySingleton<QuizLocalDataSource>(
     () => QuizLocalDataSourceImpl(),
+  );
+
+  // Journal Feature
+  sl.registerLazySingleton(() => GetJournalEntries(sl()));
+  sl.registerLazySingleton(() => AddJournalEntry(sl()));
+  sl.registerLazySingleton<JournalRepository>(
+    () => JournalRepositoryImpl(databaseHelper: sl()),
   );
 }

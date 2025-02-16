@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../data/datasources/journal_database_helper.dart';
+import 'package:quittr/core/database/database_helper.dart';
+import 'package:quittr/features/journal/domain/entities/journal_entry.dart';
 import '../../data/models/journal_entry_model.dart';
 import 'journal_detail_screen.dart';
 
@@ -22,7 +23,7 @@ class _JournalScreenState extends State<JournalScreen> {
   }
 
   void _loadEntries() {
-    _journalEntries = JournalDatabaseHelper.instance.getAllEntries();
+    _journalEntries = DatabaseHelper.instance.getAllJournalEntries();
   }
 
   void _showAddEntryBottomSheet() {
@@ -60,12 +61,12 @@ class _JournalScreenState extends State<JournalScreen> {
                   TextButton(
                     onPressed: () async {
                       if (titleController.text.isNotEmpty) {
-                        final entry = JournalEntry(
+                        final entry = JournalEntryModel(
                           title: titleController.text,
                           description: descriptionController.text,
                           createdAt: DateTime.now(),
                         );
-                        await JournalDatabaseHelper.instance.create(entry);
+                        await DatabaseHelper.instance.createJournalEntry(entry);
                         if (mounted) {
                           setState(() {
                             _loadEntries();

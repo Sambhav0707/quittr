@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../data/models/journal_entry_model.dart';
+import 'package:quittr/features/journal/domain/entities/journal_entry.dart';
 
 class EditJournalBottomSheet extends StatefulWidget {
   final JournalEntry entry;
@@ -21,7 +21,8 @@ class _EditJournalBottomSheetState extends State<EditJournalBottomSheet> {
   void initState() {
     super.initState();
     _titleController = TextEditingController(text: widget.entry.title);
-    _descriptionController = TextEditingController(text: widget.entry.description);
+    _descriptionController =
+        TextEditingController(text: widget.entry.description);
   }
 
   @override
@@ -52,7 +53,10 @@ class _EditJournalBottomSheetState extends State<EditJournalBottomSheet> {
                     _descriptionController.clear();
                     Navigator.pop(context);
                   },
-                  child: const Text('Cancel', style: TextStyle(fontWeight: FontWeight.bold),),
+                  child: const Text(
+                    'Cancel',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ),
                 TextButton(
                   onPressed: () {
@@ -64,7 +68,10 @@ class _EditJournalBottomSheetState extends State<EditJournalBottomSheet> {
                     );
                     Navigator.pop(context, updatedEntry);
                   },
-                  child: const Text('Save', style: TextStyle(fontWeight: FontWeight.bold),),
+                  child: const Text(
+                    'Save',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ),
               ],
             ),
@@ -116,4 +123,4 @@ class _EditJournalBottomSheetState extends State<EditJournalBottomSheet> {
       ),
     );
   }
-} 
+}

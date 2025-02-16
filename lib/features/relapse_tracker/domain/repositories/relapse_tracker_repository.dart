@@ -5,7 +5,7 @@ import 'package:quittr/features/relapse_tracker/domain/entities/statistics.dart'
 import 'package:quittr/features/relapse_tracker/domain/entities/streak.dart';
 
 abstract class RelapseTrackerRepository {
-  Stream<Streak> getCurrentStreak(String userId);
+  Either<Failure, Stream<Streak>> getCurrentStreak(String userId);
   Future<Either<Failure, void>> logRelapse(RelapseEntry entry);
   Future<Either<Failure, void>> startNewStreak(String userId);
   Future<Either<Failure, List<Streak>>> getAllStreaks(String userId);

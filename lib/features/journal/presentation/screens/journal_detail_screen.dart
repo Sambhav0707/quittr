@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../data/models/journal_entry_model.dart';
-import '../widgets/edit_journal_bottom_sheet.dart';
+import 'package:quittr/features/journal/domain/entities/journal_entry.dart';
 
 class JournalDetailScreen extends StatelessWidget {
   final JournalEntry entry;

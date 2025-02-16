@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../../data/datasources/journal_database_helper.dart';
 import '../../data/models/journal_entry_model.dart';
 import 'journal_detail_screen.dart';
@@ -53,7 +55,7 @@ class _JournalScreenState extends State<JournalScreen> {
                 children: [
                   TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: const Text('Cancel', style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),),
+                    child: const Text('Cancel'),
                   ),
                   TextButton(
                     onPressed: () async {
@@ -72,7 +74,7 @@ class _JournalScreenState extends State<JournalScreen> {
                         }
                       }
                     },
-                    child: const Text('Save', style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),),
+                    child: const Text('Save'),
                   ),
                 ],
               ),
@@ -124,23 +126,27 @@ class _JournalScreenState extends State<JournalScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: _showAddEntryBottomSheet,
+        label: Text("New Entry"),
+        icon: Icon(CupertinoIcons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       appBar: AppBar(
-        title: const Text('Journal', style: TextStyle(color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),),
-        leading: IconButton(
-          onPressed: () => Navigator.pop(context),
-          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black, size: 18,),
+        title: const Text(
+          'Journal',
         ),
+        leading: BackButton(),
         centerTitle: true,
         actions: [
           IconButton(
             onPressed: () {
               _showAddEntryBottomSheet();
             },
-            icon: const Icon(Icons.add, color: Colors.black, size: 24,),
+            icon: const Icon(CupertinoIcons.add),
           ),
         ],
       ),
-      
       body: Column(
         children: [
           Expanded(
@@ -157,12 +163,6 @@ class _JournalScreenState extends State<JournalScreen> {
 
                 final entries = snapshot.data ?? [];
 
-                // if (entries.isEmpty) {
-                //   return const Center(
-                //     child: Text('No journal entries yet. Add one to get started!'),
-                //   );
-                // }
-
                 return ListView.builder(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   itemCount: entries.length,
@@ -173,22 +173,28 @@ class _JournalScreenState extends State<JournalScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => JournalDetailScreen(entry: entry),
+                            builder: (context) =>
+                                JournalDetailScreen(entry: entry),
                           ),
                         );
                       },
                       child: Container(
-                        margin: const EdgeInsets.only(left: 0, right: 0, top: 0, bottom: 0),
+                        margin: const EdgeInsets.only(
+                            left: 0, right: 0, top: 0, bottom: 0),
                         decoration: BoxDecoration(
                           border: Border(
                             bottom: BorderSide(
-                              color: Colors.grey.withOpacity(0.2),
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurface
+                                  .withAlpha(40),
                               width: 1,
                             ),
                           ),
                         ),
                         child: ListTile(
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 6),
                           title: Text(
                             entry.title,
                             style: const TextStyle(
@@ -203,7 +209,8 @@ class _JournalScreenState extends State<JournalScreen> {
                               Text(entry.description),
                               const SizedBox(height: 4),
                               Text(
-                                entry.createdAt.toString(),
+                                DateFormat('MMM d, y \'at\' h:mm a')
+                                    .format(entry.createdAt),
                                 style: Theme.of(context).textTheme.bodySmall,
                               ),
                             ],
@@ -221,28 +228,8 @@ class _JournalScreenState extends State<JournalScreen> {
               },
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                minimumSize: const Size(double.infinity, 50),
-              ),
-              onPressed: _showAddEntryBottomSheet,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('New Journal Entry', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black),),
-                  const SizedBox(width: 8),
-                  const Icon(Icons.add, color: Colors.black, size: 20,),
-                ],  
-              ),
-            ),
-          ),
         ],
       ),
     );
   }
-} 
+}

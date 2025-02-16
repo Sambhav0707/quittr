@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../data/datasources/database_helper.dart';
 import '../../data/models/reason_model.dart';
@@ -43,7 +44,10 @@ class _ReasonListScreenState extends State<ReasonListScreen> {
                       _reasonController.clear();
                       Navigator.pop(context);
                     },
-                    child: const Text('Cancel', style: TextStyle(fontWeight: FontWeight.bold),),
+                    child: const Text(
+                      'Cancel',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
                   ),
                   TextButton(
                     onPressed: () async {
@@ -58,7 +62,10 @@ class _ReasonListScreenState extends State<ReasonListScreen> {
                         setState(() {});
                       }
                     },
-                    child: const Text('Save', style: TextStyle(fontWeight: FontWeight.bold),),
+                    child: const Text(
+                      'Save',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
                   ),
                 ],
               ),
@@ -103,16 +110,33 @@ class _ReasonListScreenState extends State<ReasonListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: _showAddReasonBottomSheet,
+        label: Text("New Reason"),
+        icon: Icon(
+          CupertinoIcons.add,
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       appBar: AppBar(
-        title: const Text('Reasons for Change', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black, fontSize: 18),),
+        title: const Text(
+          'Reasons for Change',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
+        ),
         centerTitle: true,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
-          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black, size: 18,),
+          icon: const Icon(
+            Icons.arrow_back_ios_new,
+            size: 18,
+          ),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.add, color: Colors.black, size: 22,),
+            icon: const Icon(Icons.add),
             onPressed: _showAddReasonBottomSheet,
           ),
         ],
@@ -138,14 +162,14 @@ class _ReasonListScreenState extends State<ReasonListScreen> {
                     return GestureDetector(
                       onTap: () {
                         Navigator.push(
-                          context, 
-                          MaterialPageRoute(
-                            builder: (context) => ReasonDetailScreen(reason: reason)
-                          )
-                        );
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ReasonDetailScreen(reason: reason)));
                       },
                       child: Container(
-                        margin: const EdgeInsets.only(left: 16, right: 0, top: 0, bottom: 0),
+                        margin: const EdgeInsets.only(
+                            left: 16, right: 0, top: 0, bottom: 0),
                         decoration: BoxDecoration(
                           border: Border(
                             bottom: BorderSide(
@@ -155,7 +179,8 @@ class _ReasonListScreenState extends State<ReasonListScreen> {
                           ),
                         ),
                         child: ListTile(
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 0),
                           title: Text(
                             reason.reason,
                             style: const TextStyle(
@@ -163,8 +188,9 @@ class _ReasonListScreenState extends State<ReasonListScreen> {
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                          trailing: const Icon(Icons.arrow_forward_ios, 
-                            color: Colors.grey, 
+                          trailing: const Icon(
+                            Icons.arrow_forward_ios,
+                            color: Colors.grey,
                             size: 18,
                           ),
                         ),
@@ -173,34 +199,6 @@ class _ReasonListScreenState extends State<ReasonListScreen> {
                   },
                 );
               },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: _showAddReasonBottomSheet,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                    'New Reason',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
-                    textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(width: 8),
-                      Icon(Icons.add, color: Theme.of(context).colorScheme.onSurface,),
-                    ],
-                  )
-                ),
-              ),
             ),
           ),
         ],
@@ -213,4 +211,4 @@ class _ReasonListScreenState extends State<ReasonListScreen> {
     _reasonController.dispose();
     super.dispose();
   }
-} 
+}

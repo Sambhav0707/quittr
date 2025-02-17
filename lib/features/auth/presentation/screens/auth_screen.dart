@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -55,7 +54,7 @@ class AuthScreen extends StatelessWidget {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Theme.of(context).colorScheme.primary.withOpacity(0.05),
+                    Theme.of(context).colorScheme.primary.withAlpha(12),
                     Theme.of(context).colorScheme.surface,
                   ],
                 ),
@@ -91,7 +90,7 @@ class AuthScreen extends StatelessWidget {
                                       color: Theme.of(context)
                                           .colorScheme
                                           .primary
-                                          .withOpacity(0.3),
+                                          .withAlpha(76),
                                       blurRadius: 24,
                                       offset: const Offset(0, 12),
                                     ),
@@ -237,7 +236,7 @@ class AuthScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: theme.colorScheme.primary.withOpacity(0.1),
+            color: theme.colorScheme.primary.withAlpha(25),
             blurRadius: 16,
             offset: const Offset(0, 8),
           ),

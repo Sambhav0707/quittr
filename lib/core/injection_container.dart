@@ -4,6 +4,9 @@ import 'package:get_it/get_it.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:quittr/core/presentation/theme/cubit/theme_cubit.dart';
+import 'package:quittr/features/paywall/data/datasources/purchase_data_source.dart';
+import 'package:quittr/features/paywall/domain/usecases/verify_subscription.dart';
+import 'package:quittr/features/paywall/presentation/bloc/paywall_bloc.dart';
 import '../features/auth/data/repositories/auth_repository_impl.dart';
 import '../features/auth/domain/repositories/auth_repository.dart';
 import '../features/profile/data/repositories/profile_repository_impl.dart';
@@ -23,6 +26,12 @@ import 'package:quittr/features/journal/domain/usecases/get_journal_entries.dart
 import 'package:quittr/features/journal/domain/usecases/add_journal_entry.dart';
 import '../features/journal/data/repositories/journal_repository_impl.dart';
 import '../features/journal/domain/repositories/journal_repository.dart';
+import '../features/paywall/domain/usecases/initialize_purchases.dart';
+import '../features/paywall/domain/usecases/get_subscriptions.dart';
+import '../features/paywall/domain/usecases/purchase_product.dart';
+import '../features/paywall/data/repositories/purchase_repository_impl.dart';
+import '../features/paywall/domain/repositories/purchase_repository.dart';
+import '../features/paywall/domain/usecases/get_purchase_updates.dart';
 
 final sl = GetIt.instance;
 
@@ -87,5 +96,28 @@ Future<void> init() async {
   sl.registerLazySingleton(() => AddJournalEntry(sl()));
   sl.registerLazySingleton<JournalRepository>(
     () => JournalRepositoryImpl(databaseHelper: sl()),
+  );
+
+  // Paywall
+  sl.registerFactory(() => PaywallBloc(
+        initializePurchases: sl(),
+        getProducts: sl(),
+        purchaseProduct: sl(),
+        verifySubscription: sl(),
+        getPurchaseUpdates: sl(),
+      ));
+
+  sl.registerLazySingleton(() => InitializePurchases(sl()));
+  sl.registerLazySingleton(() => GetSubscriptions(sl()));
+  sl.registerLazySingleton(() => PurchaseProduct(sl()));
+  sl.registerLazySingleton(() => VerifySubscription(sl()));
+  sl.registerLazySingleton(() => GetPurchaseUpdates(sl()));
+
+  // Repositories
+  sl.registerLazySingleton<PurchaseRepository>(
+    () => PurchaseRepositoryImpl(dataSource: sl()),
+  );
+  sl.registerLazySingleton<PurchaseDataSource>(
+    () => PurchaseDataSourceImpl(),
   );
 }

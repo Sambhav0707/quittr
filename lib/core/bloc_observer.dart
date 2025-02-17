@@ -18,7 +18,7 @@ class AppBlocObserver extends BlocObserver {
   @override
   void onChange(BlocBase<dynamic> bloc, Change<dynamic> change) {
     super.onChange(bloc, change);
-    log('onChange -- ${bloc.runtimeType}, $change');
+    log('onChange -- ${bloc.runtimeType}, ${change.nextState}');
   }
 
   @override
@@ -27,7 +27,7 @@ class AppBlocObserver extends BlocObserver {
     Transition<dynamic, dynamic> transition,
   ) {
     super.onTransition(bloc, transition);
-    log('onTransition -- ${bloc.runtimeType}, $transition');
+    log('onTransition -- ${bloc.runtimeType}, ${transition.event}');
   }
 
   @override

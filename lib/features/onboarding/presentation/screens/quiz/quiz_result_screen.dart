@@ -179,7 +179,7 @@ class _QuizResultScreenState extends State<QuizResultScreen>
               width: 40,
               height: 200,
               decoration: BoxDecoration(
-                color: color.withOpacity(0.2),
+                color: color.withAlpha(50),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Column(

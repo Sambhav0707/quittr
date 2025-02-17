@@ -81,7 +81,7 @@ class _CalculatingQuizResultScreenState
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Theme.of(context).colorScheme.primaryContainer.withOpacity(0.3),
+              Theme.of(context).colorScheme.primaryContainer.withAlpha(76),
               Theme.of(context).colorScheme.surface,
             ],
           ),
@@ -143,7 +143,7 @@ class _CalculatingQuizResultScreenState
         color: Theme.of(context).colorScheme.primaryContainer,
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
+            color: Theme.of(context).colorScheme.primary.withAlpha(51),
             blurRadius: 20,
             spreadRadius: 5,
           ),
@@ -178,7 +178,7 @@ class _CalculatingQuizResultScreenState
                   value: _progressAnimation.value,
                   minHeight: 8,
                   backgroundColor:
-                      Theme.of(context).colorScheme.primary.withOpacity(0.2),
+                      Theme.of(context).colorScheme.primary.withAlpha(50),
                   valueColor: AlwaysStoppedAnimation<Color>(
                     Theme.of(context).colorScheme.primary,
                   ),

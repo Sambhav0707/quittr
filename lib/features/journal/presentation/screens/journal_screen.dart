@@ -67,7 +67,7 @@ class _JournalScreenState extends State<JournalScreen> {
                           createdAt: DateTime.now(),
                         );
                         await DatabaseHelper.instance.createJournalEntry(entry);
-                        if (mounted) {
+                        if (context.mounted) {
                           setState(() {
                             _loadEntries();
                           });

@@ -4,6 +4,11 @@ import 'package:get_it/get_it.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:quittr/core/presentation/theme/cubit/theme_cubit.dart';
+import 'package:quittr/features/meditate/data/datasources/meditate_loacal_data_source.dart';
+import 'package:quittr/features/meditate/data/repository/qoutes_repository_impl.dart';
+import 'package:quittr/features/meditate/domain/repository/qoutes_repository.dart';
+import 'package:quittr/features/meditate/domain/usecases/get_qoutes.dart';
+import 'package:quittr/features/meditate/presentation/bloc/qoutes_bloc.dart';
 import '../features/auth/data/repositories/auth_repository_impl.dart';
 import '../features/auth/domain/repositories/auth_repository.dart';
 import '../features/profile/data/repositories/profile_repository_impl.dart';
@@ -88,4 +93,16 @@ Future<void> init() async {
   sl.registerLazySingleton<JournalRepository>(
     () => JournalRepositoryImpl(databaseHelper: sl()),
   );
+
+  // Features - meditation
+
+  sl.registerLazySingleton<MeditateLoacalDataSource>(() => MeditateLoacalDataSourceImpl(
+
+  ));
+
+  sl.registerLazySingleton<QoutesRepository>(() => QoutesRepositoryImpl(sl()));
+
+  sl.registerLazySingleton(() => GetQoutes(sl()));
+
+  sl.registerLazySingleton(() => QoutesBloc(sl()));
 }

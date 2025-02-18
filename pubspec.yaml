@@ -49,6 +49,7 @@ dependencies:
   dartz: ^0.10.1 # For functional programming
   formz: ^0.8.0 # For form validation
   flutter_svg: ^2.0.17
+  rive: ^0.13.20 # For animations
 
   # Firebase
   cloud_firestore: ^5.6.2
@@ -131,3 +132,6 @@ flutter:
     - assets/data/
     - assets/images/
     - assets/images/onboarding/
+    - assets/images/icons/
+    - assets/data/quotes.json
+    - assets/animations/

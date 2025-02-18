@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:quittr/features/relapse_tracker/presentation/bloc/relapse_tracker_bloc.dart';
+import 'package:quittr/features/relapse_tracker/presentation/widgets/bottom_model_sheet.dart';
 import 'package:quittr/features/relapse_tracker/presentation/widgets/streak_counter.dart';
 
 class RelapseTrackerScreen extends StatelessWidget {
@@ -44,8 +47,28 @@ class RelapseTrackerScreen extends StatelessWidget {
                     ),
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
+                      GestureDetector(
+                        onTap: () {
+                          // Navigator.pushNamed(context, '/meditate-screen');
+
+                          context
+                              .read<RelapseTrackerBloc>()
+                              .add(RelapseTrackerBottomSheetOpenEvent());
+                          BottomModelSheet()
+                              .showCompletionBottomSheet(context)
+                              .then((_) {
+                            // Reset state when sheet closes
+                            context
+                                .read<RelapseTrackerBloc>()
+                                .add(RelapseTrackerBottomSheetOpenEvent());
+                          });
+                        },
+                        child: SvgPicture.asset(
+                          'assets/images/icons/pledge_hand_icon.svg',
+                        ),
+                      ),
                       GestureDetector(
                         onTap: () {
                           Navigator.pushNamed(context, '/meditate-screen');
@@ -53,7 +76,7 @@ class RelapseTrackerScreen extends StatelessWidget {
                         child: SvgPicture.asset(
                           'assets/images/icons/meditate_icon.svg',
                         ),
-                      )
+                      ),
                     ],
                   )
                 ],

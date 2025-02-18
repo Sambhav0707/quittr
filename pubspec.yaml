@@ -50,6 +50,7 @@ dependencies:
   formz: ^0.8.0 # For form validation
   flutter_svg: ^2.0.17
   rive: ^0.13.20 # For animations
+  lottie: ^3.3.1 # For animations
 
   # Firebase
   cloud_firestore: ^5.6.2

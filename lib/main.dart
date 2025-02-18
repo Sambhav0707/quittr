@@ -14,6 +14,7 @@ import 'package:quittr/features/meditate/presentation/screens/meditate_screen.da
     as meditate;
 import 'package:quittr/features/profile/presentation/screens/edit_profile_screen.dart';
 import 'package:quittr/features/reason/presentation/screens/reason_list_screen.dart';
+import 'package:quittr/features/relapse_tracker/presentation/bloc/relapse_tracker_bloc.dart';
 import 'package:quittr/features/settings/presentation/screens/settings_screen.dart';
 import 'package:quittr/firebase_options.dart';
 import 'package:quittr/core/presentation/theme/cubit/theme_cubit.dart';
@@ -51,7 +52,8 @@ class QuittrApp extends StatelessWidget {
             ..add(const InitializePaywall())
             ..add(const VerifySubscriptionEvent()),
         ),
-        BlocProvider(create: (_) => QuotesBloc(di.sl()))
+        BlocProvider(create: (_) => QuotesBloc(di.sl())),
+        BlocProvider(create: (_) => RelapseTrackerBloc())
       ],
       child: BlocBuilder<ThemeCubit, bool>(
         builder: (context, isDarkMode) {

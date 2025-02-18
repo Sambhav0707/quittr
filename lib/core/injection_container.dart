@@ -5,10 +5,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:quittr/core/presentation/theme/cubit/theme_cubit.dart';
 import 'package:quittr/features/meditate/data/datasources/meditate_loacal_data_source.dart';
-import 'package:quittr/features/meditate/data/repository/qoutes_repository_impl.dart';
-import 'package:quittr/features/meditate/domain/repository/qoutes_repository.dart';
-import 'package:quittr/features/meditate/domain/usecases/get_qoutes.dart';
-import 'package:quittr/features/meditate/presentation/bloc/qoutes_bloc.dart';
+import 'package:quittr/features/meditate/data/repository/quotes_repository_impl.dart';
+import 'package:quittr/features/meditate/domain/repository/quotes_repository.dart';
+import 'package:quittr/features/meditate/domain/usecases/get_quotes.dart';
+import 'package:quittr/features/meditate/presentation/bloc/quotes_bloc.dart';
 import '../features/auth/data/repositories/auth_repository_impl.dart';
 import '../features/auth/domain/repositories/auth_repository.dart';
 import '../features/profile/data/repositories/profile_repository_impl.dart';
@@ -100,9 +100,9 @@ Future<void> init() async {
 
   ));
 
-  sl.registerLazySingleton<QoutesRepository>(() => QoutesRepositoryImpl(sl()));
+  sl.registerLazySingleton<QuotesRepository>(() => QuotesRepositoryImpl(sl()));
 
-  sl.registerLazySingleton(() => GetQoutes(sl()));
+  sl.registerLazySingleton(() => GetQuotes(sl()));
 
-  sl.registerLazySingleton(() => QoutesBloc(sl()));
+  sl.registerLazySingleton(() => QuotesBloc(sl()));
 }

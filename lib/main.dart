@@ -20,6 +20,7 @@ import 'package:quittr/core/presentation/theme/cubit/theme_cubit.dart';
 import 'package:quittr/features/auth/presentation/screens/auth_screen.dart';
 import 'package:quittr/features/auth/presentation/screens/email_auth_screen.dart';
 import 'package:quittr/features/journal/presentation/screens/journal_screen.dart';
+import 'package:quittr/features/paywall/presentation/bloc/paywall_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,6 +46,11 @@ class QuittrApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => AuthBloc(authRepository: di.sl())),
         BlocProvider(create: (_) => ThemeCubit(settingsRepository: di.sl())),
+        BlocProvider<PaywallBloc>(
+          create: (context) => di.sl<PaywallBloc>()
+            ..add(const InitializePaywall())
+            ..add(const VerifySubscriptionEvent()),
+        ),
         BlocProvider(create: (_) => QuotesBloc(di.sl()))
       ],
       child: BlocBuilder<ThemeCubit, bool>(

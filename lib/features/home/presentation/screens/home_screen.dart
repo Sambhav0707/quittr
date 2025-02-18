@@ -15,7 +15,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Widget> _screens = [
     const RelapseTrackerScreen(),
-    const Placeholder(), // Community tab
     const LibraryScreen(), // Library tab
     const ProfileScreen(), // Profile tab
   ];
@@ -35,10 +34,6 @@ class _HomeScreenState extends State<HomeScreen> {
           NavigationDestination(
             icon: Icon(Icons.calendar_today),
             label: 'Tracker',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.people),
-            label: 'Community',
           ),
           NavigationDestination(
             icon: Icon(Icons.library_books),

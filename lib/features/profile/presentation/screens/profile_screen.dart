@@ -4,7 +4,6 @@ import 'package:quittr/core/injection_container.dart';
 import 'package:quittr/features/auth/domain/repositories/auth_repository.dart';
 import 'package:quittr/features/profile/domain/repositories/profile_repository.dart';
 import 'package:quittr/features/profile/domain/usecases/update_profile_photo.dart';
-import 'package:quittr/features/reason/presentation/screens/reason_list_screen.dart';
 import '../bloc/profile_bloc.dart';
 import '../widgets/profile_photo_picker.dart';
 
@@ -70,7 +69,7 @@ class ProfileScreen extends StatelessWidget {
                                 shape: BoxShape.circle,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
+                                    color: Colors.black.withAlpha(25),
                                     spreadRadius: 2,
                                     blurRadius: 10,
                                   ),
@@ -102,7 +101,7 @@ class ProfileScreen extends StatelessWidget {
                               Positioned.fill(
                                 child: Container(
                                   decoration: BoxDecoration(
-                                    color: Colors.black.withOpacity(0.5),
+                                    color: Colors.black.withAlpha(127),
                                     shape: BoxShape.circle,
                                   ),
                                   child: const Center(
@@ -119,7 +118,7 @@ class ProfileScreen extends StatelessWidget {
                                   shape: BoxShape.circle,
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withOpacity(0.1),
+                                      color: Colors.black.withAlpha(25),
                                       spreadRadius: 2,
                                       blurRadius: 10,
                                     ),
@@ -236,7 +235,8 @@ class ProfileScreen extends StatelessWidget {
                           _ProfileMenuItem(
                             icon: Icons.settings_outlined,
                             title: 'Settings',
-                            onTap: () => Navigator.pushNamed(context, '/settings'),
+                            onTap: () =>
+                                Navigator.pushNamed(context, '/settings'),
                           ),
                           Divider(
                             height: 1,

@@ -5,7 +5,7 @@ import '../../data/models/reason_model.dart';
 import '../screens/reason_detail_screen.dart';
 
 class ReasonListScreen extends StatefulWidget {
-  const ReasonListScreen({Key? key}) : super(key: key);
+  const ReasonListScreen({super.key});
 
   @override
   State<ReasonListScreen> createState() => _ReasonListScreenState();
@@ -58,8 +58,10 @@ class _ReasonListScreenState extends State<ReasonListScreen> {
                         );
                         await DatabaseHelper.instance.create(reason);
                         _reasonController.clear();
-                        Navigator.pop(context);
-                        setState(() {});
+                        if (context.mounted) {
+                          Navigator.pop(context);
+                          setState(() {});
+                        }
                       }
                     },
                     child: const Text(
@@ -173,7 +175,7 @@ class _ReasonListScreenState extends State<ReasonListScreen> {
                         decoration: BoxDecoration(
                           border: Border(
                             bottom: BorderSide(
-                              color: Colors.grey.withOpacity(0.2),
+                              color: Colors.grey.withAlpha(50),
                               width: 1,
                             ),
                           ),

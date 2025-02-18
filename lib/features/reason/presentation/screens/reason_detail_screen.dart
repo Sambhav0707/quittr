@@ -4,7 +4,7 @@ import '../../data/models/reason_model.dart';
 class ReasonDetailScreen extends StatelessWidget {
   final ReasonModel reason;
 
-  const ReasonDetailScreen({Key? key, required this.reason}) : super(key: key);
+  const ReasonDetailScreen({super.key, required this.reason});
 
   @override
   Widget build(BuildContext context) {

@@ -9,6 +9,9 @@ import 'package:quittr/features/meditate/data/repository/quotes_repository_impl.
 import 'package:quittr/features/meditate/domain/repository/quotes_repository.dart';
 import 'package:quittr/features/meditate/domain/usecases/get_quotes.dart';
 import 'package:quittr/features/meditate/presentation/bloc/quotes_bloc.dart';
+import 'package:quittr/features/paywall/data/datasources/purchase_data_source.dart';
+import 'package:quittr/features/paywall/domain/usecases/verify_subscription.dart';
+import 'package:quittr/features/paywall/presentation/bloc/paywall_bloc.dart';
 import '../features/auth/data/repositories/auth_repository_impl.dart';
 import '../features/auth/domain/repositories/auth_repository.dart';
 import '../features/profile/data/repositories/profile_repository_impl.dart';
@@ -28,6 +31,12 @@ import 'package:quittr/features/journal/domain/usecases/get_journal_entries.dart
 import 'package:quittr/features/journal/domain/usecases/add_journal_entry.dart';
 import '../features/journal/data/repositories/journal_repository_impl.dart';
 import '../features/journal/domain/repositories/journal_repository.dart';
+import '../features/paywall/domain/usecases/initialize_purchases.dart';
+import '../features/paywall/domain/usecases/get_subscriptions.dart';
+import '../features/paywall/domain/usecases/purchase_product.dart';
+import '../features/paywall/data/repositories/purchase_repository_impl.dart';
+import '../features/paywall/domain/repositories/purchase_repository.dart';
+import '../features/paywall/domain/usecases/get_purchase_updates.dart';
 
 final sl = GetIt.instance;
 
@@ -93,16 +102,4 @@ Future<void> init() async {
   sl.registerLazySingleton<JournalRepository>(
     () => JournalRepositoryImpl(databaseHelper: sl()),
   );
-
-  // Features - meditation
-
-  sl.registerLazySingleton<MeditateLoacalDataSource>(() => MeditateLoacalDataSourceImpl(
-
-  ));
-
-  sl.registerLazySingleton<QuotesRepository>(() => QuotesRepositoryImpl(sl()));
-
-  sl.registerLazySingleton(() => GetQuotes(sl()));
-
-  sl.registerLazySingleton(() => QuotesBloc(sl()));
 }

@@ -151,7 +151,7 @@ class _TestimonialsScreenState extends State<TestimonialsScreen> {
                               : Theme.of(context)
                                   .colorScheme
                                   .primary
-                                  .withOpacity(0.2),
+                                  .withAlpha(51),
                         ),
                       ),
                     ),

@@ -9,6 +9,9 @@ import 'package:quittr/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:quittr/features/auth/presentation/screens/auth_wrapper.dart';
 import 'package:quittr/features/auth/presentation/screens/forgot_password_screen.dart';
 import 'package:quittr/features/home/presentation/screens/home_screen.dart';
+import 'package:quittr/features/meditate/presentation/bloc/quotes_bloc.dart';
+import 'package:quittr/features/meditate/presentation/screens/meditate_screen.dart'
+    as meditate;
 import 'package:quittr/features/profile/presentation/screens/edit_profile_screen.dart';
 import 'package:quittr/features/reason/presentation/screens/reason_list_screen.dart';
 import 'package:quittr/features/settings/presentation/screens/settings_screen.dart';
@@ -48,6 +51,7 @@ class QuittrApp extends StatelessWidget {
             ..add(const InitializePaywall())
             ..add(const VerifySubscriptionEvent()),
         ),
+        BlocProvider(create: (_) => QuotesBloc(di.sl()))
       ],
       child: BlocBuilder<ThemeCubit, bool>(
         builder: (context, isDarkMode) {
@@ -68,6 +72,7 @@ class QuittrApp extends StatelessWidget {
               '/settings': (context) => const SettingsScreen(),
               '/recovery-journal': (context) => const JournalScreen(),
               '/reason-list': (context) => const ReasonListScreen(),
+              '/meditate-screen': (context) => const meditate.MeditateScreen(),
             },
           );
         },

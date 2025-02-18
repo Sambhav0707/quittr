@@ -102,4 +102,40 @@ Future<void> init() async {
   sl.registerLazySingleton<JournalRepository>(
     () => JournalRepositoryImpl(databaseHelper: sl()),
   );
+
+
+   // Features - meditation
+
+  sl.registerLazySingleton<MeditateLoacalDataSource>(() => MeditateLoacalDataSourceImpl(
+
+  ));
+
+  sl.registerLazySingleton<QuotesRepository>(() => QuotesRepositoryImpl(sl()));
+
+  sl.registerLazySingleton(() => GetQuotes(sl()));
+
+  sl.registerLazySingleton(() => QuotesBloc(sl()));
+
+    // Paywall
+  sl.registerFactory(() => PaywallBloc(
+        initializePurchases: sl(),
+        getProducts: sl(),
+        purchaseProduct: sl(),
+        verifySubscription: sl(),
+        getPurchaseUpdates: sl(),
+      ));
+
+  sl.registerLazySingleton(() => InitializePurchases(sl()));
+  sl.registerLazySingleton(() => GetSubscriptions(sl()));
+  sl.registerLazySingleton(() => PurchaseProduct(sl()));
+  sl.registerLazySingleton(() => VerifySubscription(sl()));
+  sl.registerLazySingleton(() => GetPurchaseUpdates(sl()));
+
+  // Repositories
+  sl.registerLazySingleton<PurchaseRepository>(
+    () => PurchaseRepositoryImpl(dataSource: sl()),
+  );
+  sl.registerLazySingleton<PurchaseDataSource>(
+    () => PurchaseDataSourceImpl(),
+  );
 }

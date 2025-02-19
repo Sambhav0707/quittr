@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import '../widgets/progress_bar.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:quittr/features/relapse_tracker/presentation/bloc/relapse_tracker_bloc.dart';
+import 'package:quittr/features/relapse_tracker/presentation/widgets/bottom_model_sheet.dart';
+import 'package:quittr/features/relapse_tracker/presentation/widgets/streak_counter.dart';
 
 class RelapseTrackerScreen extends StatelessWidget {
   const RelapseTrackerScreen({super.key});
@@ -39,155 +42,73 @@ class RelapseTrackerScreen extends StatelessWidget {
               // Main streak display
               Column(
                 children: [
-                  Text(
-                    "You've been porn-free for:",
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    "27 days",
-                    style: GoogleFonts.poppins(
-                      fontSize: 48,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 8,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.surfaceVariant,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Text(
-                      "14hr 1m 55s",
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 32),
-              // Action buttons
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _buildActionButton(
-                    context,
-                    icon: Icons.handshake_outlined,
-                    label: 'Pledge',
-                    onTap: () {
-                      // TODO: Implement pledge
-                    },
-                  ),
-                  _buildActionButton(
-                    context,
-                    icon: Icons.self_improvement_outlined,
-                    label: 'Meditate',
-                    onTap: () {
-                      Navigator.pushNamed(context, '/meditate-screen');
-                    },
-                  ),
-                  _buildActionButton(
-                    context,
-                    icon: Icons.refresh_outlined,
-                    label: 'Reset',
-                    onTap: () {
-                      // TODO: Implement reset
-                    },
-                  ),
-                  _buildActionButton(
-                    context,
-                    icon: Icons.more_horiz,
-                    label: 'More',
-                    onTap: () {
-                      // TODO: Show more options
-                    },
-                  ),
-                ],
-              ),
-              const SizedBox(height: 32),
-              // Progress bars
-              ProgressBar(
-                label: 'Brain Rewiring',
-                progress: 0.31,
-                progressText: '31%',
-              ),
-              const SizedBox(height: 16),
-              ProgressBar(
-                label: '28 Day Challenge',
-                progress: 0.0,
-                progressText: '0%',
-              ),
-              const SizedBox(height: 24),
-              // Panic button
-              ElevatedButton(
-                onPressed: () {
-                  // TODO: Implement panic button action
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.error,
-                  foregroundColor: Theme.of(context).colorScheme.onError,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 32,
-                    vertical: 16,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.timer_outlined),
-                    const SizedBox(width: 8),
-                    Text(
-                      'Panic Button',
-                      style: GoogleFonts.poppins(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
+                  Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        children: [
+                          const StreakCounter(
+                            days: 0, // Will be replaced with actual streak
+                            subtitle: 'Current Streak',
+                          ),
+                          const SizedBox(height: 16),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              const StreakCounter(
+                                days: 0, // Will be replaced with best streak
+                                subtitle: 'Best Streak',
+                              ),
+                              const StreakCounter(
+                                days:
+                                    0, // Will be replaced with total clean days
+                                subtitle: 'Total Clean Days',
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          // Navigator.pushNamed(context, '/meditate-screen');
 
-  Widget _buildActionButton(
-    BuildContext context, {
-    required IconData icon,
-    required String label,
-    required VoidCallback onTap,
-  }) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
-      child: Container(
-        width: 72,
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surfaceVariant,
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                icon,
-                color: Theme.of(context).colorScheme.primary,
+                          context
+                              .read<RelapseTrackerBloc>()
+                              .add(RelapseTrackerBottomSheetOpenEvent());
+                          BottomModelSheet()
+                              .showCompletionBottomSheet(context)
+                              .then((_) {
+                            // Reset state when sheet closes
+                            context
+                                .read<RelapseTrackerBloc>()
+                                .add(RelapseTrackerBottomSheetOpenEvent());
+                          });
+                        },
+                        child: SvgPicture.asset(
+                          'assets/images/icons/pledge_hand_icon.svg',
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/meditate-screen');
+                        },
+                        child: SvgPicture.asset(
+                          'assets/images/icons/meditate_icon.svg',
+                        ),
+                      ),
+                    ],
+                  )
+                ],
               ),
             ),
-            const SizedBox(height: 8),
-            Text(
-              label,
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
+
+            // Calendar view will go here
+            // Progress insights will go here
           ],
         ),
       ),

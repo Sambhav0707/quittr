@@ -12,6 +12,7 @@ import 'package:quittr/features/home/presentation/screens/home_screen.dart';
 import 'package:quittr/features/meditate/presentation/bloc/quotes_bloc.dart';
 import 'package:quittr/features/meditate/presentation/screens/meditate_screen.dart'
     as meditate;
+import 'package:quittr/features/motivaton/presentation/screens/motivation_screen.dart';
 import 'package:quittr/features/profile/presentation/screens/edit_profile_screen.dart';
 import 'package:quittr/features/reason/presentation/screens/reason_list_screen.dart';
 import 'package:quittr/features/relapse_tracker/presentation/bloc/relapse_tracker_bloc.dart';
@@ -53,7 +54,6 @@ class QuittrApp extends StatelessWidget {
             ..add(const InitializePaywall())
             ..add(const VerifySubscriptionEvent()),
         ),
-        BlocProvider(create: (_) => QuotesBloc(di.sl())),
         BlocProvider(create: (_) => RelapseTrackerBloc())
       ],
       child: BlocBuilder<ThemeCubit, bool>(
@@ -76,6 +76,7 @@ class QuittrApp extends StatelessWidget {
               '/recovery-journal': (context) => const JournalScreen(),
               '/reason-list': (context) => const ReasonListScreen(),
               '/meditate-screen': (context) => const meditate.MeditateScreen(),
+              '/motivation-screen': (context) => const MotivationScreen()
             },
           );
         },

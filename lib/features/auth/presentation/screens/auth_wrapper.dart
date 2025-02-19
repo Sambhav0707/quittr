@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quittr/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:quittr/features/auth/presentation/screens/auth_screen.dart';
 import 'package:quittr/features/home/presentation/screens/home_screen.dart';
-import 'package:quittr/features/paywall/presentation/screens/paywall_screen.dart';
+import 'package:quittr/features/onboarding/presentation/screens/quiz/get_started_screen.dart';
 
 class AuthWrapper extends StatelessWidget {
   const AuthWrapper({super.key});
@@ -23,8 +23,7 @@ class AuthWrapper extends StatelessWidget {
           if (state.user != null) {
             return const HomeScreen();
           }
-          // return const PaywallScreen(userInfo: {});
-          return AuthScreen();
+          return const GetStartedScreen();
         },
       ),
     );

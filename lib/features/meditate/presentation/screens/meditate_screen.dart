@@ -28,25 +28,25 @@ class _MeditateScreenState extends State<MeditateScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: BlocBuilder<QuotesBloc, QuotesState>(
-          builder: (context, state) {
-            if (state is QuotesLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
+      body: BlocBuilder<QuotesBloc, QuotesState>(
+        builder: (context, state) {
+          if (state is QuotesLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
 
-            if (state is QuotesSuccess) {
-              return Stack(
-                children: [
-                  Positioned.fill(
-                    child: RiveAnimation.asset(
-                      'assets/animations/sky_moon_night.riv',
-                      fit: BoxFit.cover,
-                    ),
+          if (state is QuotesSuccess) {
+            return Stack(
+              children: [
+                Positioned.fill(
+                  child: RiveAnimation.asset(
+                    'assets/animations/sky_moon_night.riv',
+                    fit: BoxFit.cover,
                   ),
-                  Padding(
+                ),
+                SafeArea(
+                  child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -56,12 +56,15 @@ class _MeditateScreenState extends State<MeditateScreen> {
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                const Text(
+                                Text(
                                   "Reflect and breathe",
-                                  style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineLarge
+                                      ?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
                                 ),
                                 const SizedBox(height: 20),
                                 AnimatedOpacity(
@@ -69,12 +72,13 @@ class _MeditateScreenState extends State<MeditateScreen> {
                                   duration: const Duration(milliseconds: 1200),
                                   child: Text(
                                     state.quotes[state.currentQuoteIndex].text,
-                                    style: const TextStyle(
-                                      fontSize: 18,
-                                      height: 1.5,
-                                      fontWeight: FontWeight.bold,
-                                    ),
                                     textAlign: TextAlign.center,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge
+                                        ?.copyWith(
+                                          color: Colors.white,
+                                        ),
                                   ),
                                 ),
                               ],
@@ -83,31 +87,34 @@ class _MeditateScreenState extends State<MeditateScreen> {
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            decoration:
-                                const BoxDecoration(color: Colors.white),
-                            width: double.infinity,
-                            height: 50,
-                            child: ElevatedButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: const Text("Finish Reflecting"),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              minimumSize: const Size(double.infinity, 50),
+                              textStyle: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium
+                                  ?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                             ),
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text("Finish Reflecting"),
                           ),
                         )
                       ],
                     ),
                   ),
-                ],
-              );
-            }
+                ),
+              ],
+            );
+          }
 
-            if (state is QuotesFailure) {
-              return Center(child: Text(state.message));
-            }
+          if (state is QuotesFailure) {
+            return Center(child: Text(state.message));
+          }
 
-            return const Center(child: Text("No quotes"));
-          },
-        ),
+          return const Center(child: Text("No quotes"));
+        },
       ),
     );
   }

@@ -48,6 +48,7 @@ class QuittrApp extends StatelessWidget {
         BlocProvider(create: (_) => AuthBloc(authRepository: di.sl())),
         BlocProvider(create: (_) => ThemeCubit(settingsRepository: di.sl())),
         BlocProvider<PaywallBloc>(
+          lazy: false,
           create: (context) => di.sl<PaywallBloc>()
             ..add(const InitializePaywall())
             ..add(const VerifySubscriptionEvent()),

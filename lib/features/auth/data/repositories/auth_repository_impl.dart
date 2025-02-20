@@ -53,6 +53,7 @@ class AuthRepositoryImpl implements AuthRepository {
         email: firebaseUser.email,
         name: firebaseUser.displayName,
         photoUrl: firebaseUser.photoURL,
+        isNewUser: userCredential.additionalUserInfo?.isNewUser ?? false,
       ));
     } catch (e) {
       return Left(AuthFailure(e.toString()));
@@ -76,6 +77,7 @@ class AuthRepositoryImpl implements AuthRepository {
         email: firebaseUser.email,
         name: firebaseUser.displayName,
         photoUrl: firebaseUser.photoURL,
+        isNewUser: userCredential.additionalUserInfo?.isNewUser ?? false,
       ));
     } on firebase_auth.FirebaseAuthException catch (e) {
       if (e.code == 'invalid-credential') {
@@ -99,6 +101,7 @@ class AuthRepositoryImpl implements AuthRepository {
         email: firebaseUser.email,
         name: firebaseUser.displayName,
         photoUrl: firebaseUser.photoURL,
+        isNewUser: userCredential.additionalUserInfo?.isNewUser ?? false,
       ));
     } on firebase_auth.FirebaseAuthException catch (e) {
       return Left(AuthFailure(e.message ?? 'Sign up failed'));

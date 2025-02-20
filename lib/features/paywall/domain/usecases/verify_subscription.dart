@@ -15,20 +15,8 @@ class VerifySubscription implements UseCase<bool, NoParams> {
     purchases.fold(
       (failure) => Left(failure),
       (purchases) {
-        if (purchases == null) return Right(false);
-        return Right(
-          purchases.any(
-            (r) {
-              if (r.purchaseStateAndroid == PurchaseState.purchased) {
-                return true;
-              }
-              if (r.transactionStateIOS == TransactionState.restored) {
-                return true;
-              }
-              return false;
-            },
-          ),
-        );
+        final hasSubscription = purchases?.isNotEmpty ?? false;
+        return Right(hasSubscription);
       },
     );
     return Right(false);

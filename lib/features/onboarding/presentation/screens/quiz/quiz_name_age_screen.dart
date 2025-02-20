@@ -75,88 +75,89 @@ class _QuizNameAgeScreenState extends State<QuizNameAgeScreen> {
                 ],
               ),
             ),
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        controller: _nameController,
-                        decoration: InputDecoration(
-                          labelText: 'Your Name',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 40,
-                            vertical: 16,
-                          ),
-                          filled: true,
-                          prefixIcon: const Icon(CupertinoIcons.person),
-                          prefixIconConstraints: const BoxConstraints(
-                            minWidth: 55,
-                            minHeight: 24,
-                          ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: _nameController,
+                      decoration: InputDecoration(
+                        labelText: 'Your Name',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your name';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 16),
-                      TextFormField(
-                        controller: _ageController,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          labelText: 'Your Age',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 40,
-                            vertical: 16,
-                          ),
-                          filled: true,
-                          prefixIcon: const Icon(CupertinoIcons.calendar),
-                          prefixIconConstraints: const BoxConstraints(
-                            minWidth: 55,
-                            minHeight: 24,
-                          ),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 40,
+                          vertical: 16,
                         ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your age';
-                          }
-                          final age = int.tryParse(value);
-                          if (age == null || age < 13 || age > 120) {
-                            return 'Please enter a valid age';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 24),
-                      FilledButton(
-                        onPressed: _onContinue,
-                        style: FilledButton.styleFrom(
-                          minimumSize: const Size.fromHeight(56),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
+                        filled: true,
+                        prefixIcon: const Icon(CupertinoIcons.person),
+                        prefixIconConstraints: const BoxConstraints(
+                          minWidth: 55,
+                          minHeight: 24,
                         ),
-                        child: const Text('Continue'),
                       ),
-                    ],
-                  ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your name';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller: _ageController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: 'Your Age',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 40,
+                          vertical: 16,
+                        ),
+                        filled: true,
+                        prefixIcon: const Icon(CupertinoIcons.calendar),
+                        prefixIconConstraints: const BoxConstraints(
+                          minWidth: 55,
+                          minHeight: 24,
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your age';
+                        }
+                        final age = int.tryParse(value);
+                        if (age == null || age < 13 || age > 120) {
+                          return 'Please enter a valid age';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 24),
+                    FilledButton(
+                      onPressed: _onContinue,
+                      style: FilledButton.styleFrom(
+                        minimumSize: const Size.fromHeight(56),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: const Text('Continue'),
+                    ),
+                  ],
                 ),
               ),
             ),
-            SvgPicture.asset(
-              'assets/illustrations/quiz_screen.svg',
-              width: MediaQuery.sizeOf(context).width,
+            const SizedBox(height: 15),
+            Expanded(
+              child: SvgPicture.asset(
+                'assets/illustrations/quiz_screen.svg',
+                width: MediaQuery.sizeOf(context).width,
+              ),
             ),
           ],
         ),

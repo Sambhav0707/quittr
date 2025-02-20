@@ -1,8 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quittr/features/relapse_tracker/presentation/bloc/relapse_tracker_bloc.dart';
 import 'package:quittr/features/relapse_tracker/presentation/widgets/bottom_model_sheet.dart';
+import 'package:quittr/features/relapse_tracker/presentation/widgets/relapse_action_button.dart';
 import '../widgets/progress_bar.dart';
 
 class RelapseTrackerScreen extends StatelessWidget {
@@ -11,6 +13,17 @@ class RelapseTrackerScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {},
+        label: Text("Panic Button"),
+        icon: Icon(Icons.timer_outlined),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(100),
+        ),
+        backgroundColor: Theme.of(context).colorScheme.error.withAlpha(255),
+        foregroundColor: Theme.of(context).colorScheme.onError,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       appBar: AppBar(
         actions: [
           IconButton(
@@ -33,24 +46,20 @@ class RelapseTrackerScreen extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 16),
-              // Header with icons
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [],
-              ),
-              const SizedBox(height: 24),
               // Main streak display
               Column(
                 children: [
                   Text(
                     "You've been porn-free for:",
-                    style: Theme.of(context).textTheme.titleMedium,
+                    style: GoogleFonts.poppins(
+                      fontSize: MediaQuery.sizeOf(context).height * 0.015,
+                    ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 0),
                   Text(
                     "27 days",
                     style: GoogleFonts.poppins(
-                      fontSize: 48,
+                      fontSize: MediaQuery.sizeOf(context).height * 0.07,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -60,7 +69,8 @@ class RelapseTrackerScreen extends StatelessWidget {
                       vertical: 8,
                     ),
                     decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.surfaceVariant,
+                      color:
+                          Theme.of(context).colorScheme.surfaceContainerHighest,
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
@@ -75,8 +85,7 @@ class RelapseTrackerScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  _buildActionButton(
-                    context,
+                  RelapseActionButton(
                     icon: Icons.handshake_outlined,
                     label: 'Pledge',
                     onTap: () {
@@ -93,24 +102,21 @@ class RelapseTrackerScreen extends StatelessWidget {
                       });
                     },
                   ),
-                  _buildActionButton(
-                    context,
+                  RelapseActionButton(
                     icon: Icons.self_improvement_outlined,
                     label: 'Meditate',
                     onTap: () {
                       Navigator.pushNamed(context, '/meditate-screen');
                     },
                   ),
-                  _buildActionButton(
-                    context,
+                  RelapseActionButton(
                     icon: Icons.refresh_outlined,
                     label: 'Reset',
                     onTap: () {
                       // TODO: Implement reset
                     },
                   ),
-                  _buildActionButton(
-                    context,
+                  RelapseActionButton(
                     icon: Icons.more_horiz,
                     label: 'More',
                     onTap: () {
@@ -132,182 +138,146 @@ class RelapseTrackerScreen extends StatelessWidget {
                 progress: 0.0,
                 progressText: '0%',
               ),
-              const SizedBox(height: 24),
-              // Panic button
-              ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.error,
-                  foregroundColor: Theme.of(context).colorScheme.onError,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 32,
-                    vertical: 16,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
+              const SizedBox(height: 16),
+              Card(
+                elevation: 0,
+                margin: EdgeInsets.zero,
+                clipBehavior: Clip.antiAlias,
+                color: Theme.of(context)
+                    .colorScheme
+                    .surfaceContainerHighest
+                    .withAlpha(80),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.timer_outlined),
-                    const SizedBox(width: 8),
-                    Text(
-                      'Panic Button',
-                      style: GoogleFonts.poppins(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 0,
+                  ),
+                  child: Column(
+                    children: [
+                      _RelapseMenuItem(
+                        icon: Icons.monitor_heart,
+                        iconColor: Colors.blue.shade900,
+                        title: 'Side Effects',
+                        onTap: () async {},
                       ),
-                    ),
-                  ],
+                      Divider(
+                        height: 1,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .surfaceContainerHighest,
+                      ),
+                      _RelapseMenuItem(
+                        icon: Icons.stacked_line_chart,
+                        iconColor: Colors.green.shade900,
+                        title: 'Motivation',
+                        onTap: () =>
+                            Navigator.pushNamed(context, "/motivation-screen"),
+                      ),
+                      Divider(
+                        height: 1,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .surfaceContainerHighest,
+                      ),
+                      _RelapseMenuItem(
+                        icon: Icons.air,
+                        iconColor: Colors.orange.shade900,
+                        title: 'Breathe Exercise',
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          '/recovery-journal',
+                        ),
+                      ),
+                      Divider(
+                        height: 1,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .surfaceContainerHighest,
+                      ),
+                      _RelapseMenuItem(
+                        icon: Icons.check,
+                        iconColor: Colors.yellow.shade900,
+                        title: 'Sucesss Stories',
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          '/recovery-journal',
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: _buildMindfulNessSection(context),
-              )
+              const SizedBox(height: 100),
             ],
           ),
         ),
       ),
     );
   }
+}
 
-  Widget _buildMindfulNessSection(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: Colors.blueGrey.shade100,
-          borderRadius: BorderRadius.all(
-            Radius.circular(10),
-          ),
-          border: Border.all()),
+class _RelapseMenuItem extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final VoidCallback onTap;
+  final Color? iconColor;
+
+  const _RelapseMenuItem({
+    required this.icon,
+    required this.title,
+    required this.onTap,
+    this.iconColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("Mindfulness"),
-            _buildRowLayout(
-              title: "Side Effects",
-              icon: Icons.monitor_heart,
-              iconColor: Colors.blue.shade300,
-              onPressed: () {},
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            _buildRowLayout(
-              title: "Motivation",
-              icon: Icons.stacked_line_chart,
-              iconColor: Colors.green,
-              onPressed: () {
-                Navigator.pushNamed(context, "/motivation-screen");
-              },
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            _buildRowLayout(
-              title: "Breathe Exercise",
-              icon: Icons.air,
-              iconColor: Colors.orangeAccent,
-              onPressed: () {},
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            _buildRowLayout(
-                title: "Success Stories",
-                icon: Icons.check,
-                iconColor: Colors.yellowAccent.shade200,
-                onPressed: () {}),
-            SizedBox(
-              height: 10,
-            ),
-          ],
+        padding: const EdgeInsets.only(
+          right: 20,
+          left: 10,
+          bottom: 2,
+          top: 2,
         ),
-      ),
-    );
-  }
-
-  Widget _buildRowLayout({
-    required String title,
-    required IconData icon,
-    required Color iconColor,
-    required VoidCallback? onPressed,
-  }) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: SizedBox(
-        height: 40,
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 5),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: (iconColor ?? Theme.of(context).colorScheme.primary)
+                      .withAlpha(25),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(
+                  icon,
+                  size: 24,
+                  color: iconColor ?? Theme.of(context).colorScheme.primary,
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(
-                      icon,
-                      color: iconColor,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
                     Text(
                       title,
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.titleSmall,
                     ),
                   ],
                 ),
-                Icon(Icons.arrow_forward_ios),
-              ],
-            ),
-            Container(
-              width: 220, // Set the desired width for the border
-              height: 1, // Set the height of the border
-              color:
-                  Colors.grey.withOpacity(0.2), // Set the color of the border
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildActionButton(
-    BuildContext context, {
-    required IconData icon,
-    required String label,
-    required VoidCallback onTap,
-  }) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
-      child: Container(
-        width: 72,
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surfaceVariant,
-                shape: BoxShape.circle,
               ),
-              child: Icon(
-                icon,
-                color: Theme.of(context).colorScheme.primary,
+              Icon(
+                Icons.arrow_forward_ios,
+                size: 16,
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
               ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              label,
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -17,7 +17,8 @@ class ProgressBar extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.3),
+        color:
+            Theme.of(context).colorScheme.surfaceContainerHighest.withAlpha(80),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -44,7 +45,8 @@ class ProgressBar extends StatelessWidget {
             child: LinearProgressIndicator(
               value: progress,
               minHeight: 8,
-              backgroundColor: Theme.of(context).colorScheme.surfaceVariant,
+              backgroundColor:
+                  Theme.of(context).colorScheme.surfaceContainerHighest,
               valueColor: AlwaysStoppedAnimation<Color>(
                 Theme.of(context).colorScheme.primary,
               ),

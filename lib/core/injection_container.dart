@@ -9,6 +9,10 @@ import 'package:quittr/features/meditate/data/repository/quotes_repository_impl.
 import 'package:quittr/features/meditate/domain/repository/quotes_repository.dart';
 import 'package:quittr/features/meditate/domain/usecases/get_quotes.dart';
 import 'package:quittr/features/meditate/presentation/bloc/quotes_bloc.dart';
+import 'package:quittr/features/motivaton/data/data_sources/motivation_quotes_local_datasource.dart';
+import 'package:quittr/features/motivaton/data/repository/motivational_quotes_repository_impl.dart';
+import 'package:quittr/features/motivaton/domain/repository/motivation_quotes_repository.dart';
+import 'package:quittr/features/motivaton/domain/usecases/get_motivationalQuotes.dart';
 import 'package:quittr/features/paywall/data/datasources/purchase_data_source.dart';
 import 'package:quittr/features/paywall/domain/usecases/verify_subscription.dart';
 import 'package:quittr/features/paywall/presentation/bloc/paywall_bloc.dart';
@@ -105,14 +109,14 @@ Future<void> init() async {
 
   // Features - meditation
 
-  sl.registerLazySingleton<MeditateLoacalDataSource>(
+  sl.registerFactory<MeditateLoacalDataSource>(
       () => MeditateLoacalDataSourceImpl());
 
-  sl.registerLazySingleton<QuotesRepository>(() => QuotesRepositoryImpl(sl()));
+  sl.registerFactory<QuotesRepository>(() => QuotesRepositoryImpl(sl()));
 
-  sl.registerLazySingleton(() => GetQuotes(sl()));
+  sl.registerFactory(() => GetQuotes(sl()));
 
-  sl.registerLazySingleton(() => QuotesBloc(sl()));
+ 
 
   // Paywall
   sl.registerLazySingleton(
@@ -138,4 +142,12 @@ Future<void> init() async {
   sl.registerLazySingleton<PurchaseDataSource>(
     () => PurchaseDataSourceImpl(),
   );
+
+  //Feature :- Motivation
+
+  sl.registerFactory<MotivationQuotesLocalDatasource>(
+      () => MotivationQuotesLocalDatasourceImpl());
+  sl.registerFactory<MotivationQuotesRepository>(
+      () => MotivationalQuotesRepositoryImpl(sl()));
+  sl.registerFactory(() => GetMotivationalquotes(sl()));
 }

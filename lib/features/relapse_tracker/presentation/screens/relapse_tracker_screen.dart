@@ -162,8 +162,116 @@ class RelapseTrackerScreen extends StatelessWidget {
                   ],
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: _buildMindfulNessSection(context),
+              )
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMindfulNessSection(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+          color: Colors.blueGrey.shade100,
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
+          border: Border.all()),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("Mindfulness"),
+            _buildRowLayout(
+              title: "Side Effects",
+              icon: Icons.monitor_heart,
+              iconColor: Colors.blue.shade300,
+              onPressed: () {},
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            _buildRowLayout(
+              title: "Motivation",
+              icon: Icons.stacked_line_chart,
+              iconColor: Colors.green,
+              onPressed: () {
+                Navigator.pushNamed(context, "/motivation-screen");
+              },
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            _buildRowLayout(
+              title: "Breathe Exercise",
+              icon: Icons.air,
+              iconColor: Colors.orangeAccent,
+              onPressed: () {},
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            _buildRowLayout(
+                title: "Success Stories",
+                icon: Icons.check,
+                iconColor: Colors.yellowAccent.shade200,
+                onPressed: () {}),
+            SizedBox(
+              height: 10,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRowLayout({
+    required String title,
+    required IconData icon,
+    required Color iconColor,
+    required VoidCallback? onPressed,
+  }) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: SizedBox(
+        height: 40,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Icon(
+                      icon,
+                      color: iconColor,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      title,
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+                Icon(Icons.arrow_forward_ios),
+              ],
+            ),
+            Container(
+              width: 220, // Set the desired width for the border
+              height: 1, // Set the height of the border
+              color:
+                  Colors.grey.withOpacity(0.2), // Set the color of the border
+            ),
+          ],
         ),
       ),
     );

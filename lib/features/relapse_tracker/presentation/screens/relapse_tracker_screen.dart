@@ -255,7 +255,9 @@ class RelapseTrackerScreen extends StatelessWidget {
                             .healing, // Better represents side effects/health impacts
                         iconColor: Colors.red.shade800,
                         title: 'Side Effects',
-                        onTap: () async {},
+                        onTap: () async {
+                          Navigator.pushNamed(context, '/side-effects-screen');
+                        },
                       ),
                       Divider(
                         height: 1,
@@ -282,7 +284,10 @@ class RelapseTrackerScreen extends StatelessWidget {
                             .self_improvement, // Better represents breathing/meditation
                         iconColor: Colors.blue.shade600,
                         title: 'Breathe Exercise',
-                        onTap: () {},
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          '/breathing-exercise-screen',
+                        ),
                       ),
                       Divider(
                         height: 1,

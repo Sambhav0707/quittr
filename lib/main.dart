@@ -9,7 +9,6 @@ import 'package:quittr/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:quittr/features/auth/presentation/screens/auth_wrapper.dart';
 import 'package:quittr/features/auth/presentation/screens/forgot_password_screen.dart';
 import 'package:quittr/features/home/presentation/screens/home_screen.dart';
-import 'package:quittr/features/meditate/presentation/bloc/quotes_bloc.dart';
 import 'package:quittr/features/meditate/presentation/screens/meditate_screen.dart'
     as meditate;
 import 'package:quittr/features/motivaton/presentation/screens/motivation_screen.dart';

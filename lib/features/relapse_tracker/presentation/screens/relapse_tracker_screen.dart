@@ -1,9 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:quittr/features/relapse_tracker/presentation/bloc/relapse_tracker_bloc.dart';
-import 'package:quittr/features/relapse_tracker/presentation/widgets/bottom_model_sheet.dart';
+import 'package:quittr/features/library/presentation/screens/screens.dart';
+import 'package:quittr/features/pledge/presentation/screens/pledge_screen.dart';
 import 'package:quittr/features/relapse_tracker/presentation/widgets/relapse_action_button.dart';
 import '../widgets/progress_bar.dart';
 
@@ -89,17 +87,12 @@ class RelapseTrackerScreen extends StatelessWidget {
                     icon: Icons.handshake_outlined,
                     label: 'Pledge',
                     onTap: () {
-                      context
-                          .read<RelapseTrackerBloc>()
-                          .add(RelapseTrackerBottomSheetOpenEvent());
-                      BottomModelSheet()
-                          .showCompletionBottomSheet(context)
-                          .then((_) {
-                        // Reset state when sheet closes
-                        context
-                            .read<RelapseTrackerBloc>()
-                            .add(RelapseTrackerBottomSheetOpenEvent());
-                      });
+                      showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return PledgeScreen();
+                        },
+                      );
                     },
                   ),
                   RelapseActionButton(
@@ -139,6 +132,19 @@ class RelapseTrackerScreen extends StatelessWidget {
                 progressText: '0%',
               ),
               const SizedBox(height: 16),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 12, bottom: 5),
+                  child: Text(
+                    "Main",
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
               Card(
                 elevation: 0,
                 margin: EdgeInsets.zero,
@@ -157,8 +163,97 @@ class RelapseTrackerScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       _RelapseMenuItem(
-                        icon: Icons.monitor_heart,
-                        iconColor: Colors.blue.shade900,
+                        icon: Icons
+                            .lightbulb_outline, // Better icon for motivation/change
+                        iconColor:
+                            Colors.orange.shade800, // Motivation/change related
+                        title: 'Reason for Change',
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          '/reason-list',
+                        ),
+                      ),
+                      Divider(
+                        height: 1,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .surfaceContainerHighest,
+                      ),
+                      _RelapseMenuItem(
+                        icon: Icons.forum_outlined, // Better icon for chat
+                        iconColor: Colors.indigo.shade600, // Communication
+                        title: 'Chat',
+                        onTap: () {},
+                      ),
+                      Divider(
+                        height: 1,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .surfaceContainerHighest,
+                      ),
+                      _RelapseMenuItem(
+                        icon: Icons.school_outlined, // Better icon for learning
+                        iconColor: Colors.teal.shade700, // Education/growth
+                        title: 'Learn',
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => ArticlesScreen(),
+                          ),
+                        ),
+                      ),
+                      Divider(
+                        height: 1,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .surfaceContainerHighest,
+                      ),
+                      _RelapseMenuItem(
+                        icon: Icons
+                            .emoji_events_outlined, // Already good icon for achievements
+                        iconColor: Colors.amber.shade800, // Achievement/rewards
+                        title: 'Achievements',
+                        onTap: () {},
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 12, bottom: 5),
+                  child: Text(
+                    "Mindfulness",
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              Card(
+                elevation: 0,
+                margin: EdgeInsets.zero,
+                clipBehavior: Clip.antiAlias,
+                color: Theme.of(context)
+                    .colorScheme
+                    .surfaceContainerHighest
+                    .withAlpha(80),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 0,
+                  ),
+                  child: Column(
+                    children: [
+                      _RelapseMenuItem(
+                        icon: Icons
+                            .healing, // Better represents side effects/health impacts
+                        iconColor: Colors.red.shade800,
                         title: 'Side Effects',
                         onTap: () async {},
                       ),
@@ -169,8 +264,9 @@ class RelapseTrackerScreen extends StatelessWidget {
                             .surfaceContainerHighest,
                       ),
                       _RelapseMenuItem(
-                        icon: Icons.stacked_line_chart,
-                        iconColor: Colors.green.shade900,
+                        icon: Icons
+                            .rocket_launch, // Better represents motivation/progress
+                        iconColor: Colors.green.shade700,
                         title: 'Motivation',
                         onTap: () =>
                             Navigator.pushNamed(context, "/motivation-screen"),
@@ -182,13 +278,11 @@ class RelapseTrackerScreen extends StatelessWidget {
                             .surfaceContainerHighest,
                       ),
                       _RelapseMenuItem(
-                        icon: Icons.air,
-                        iconColor: Colors.orange.shade900,
+                        icon: Icons
+                            .self_improvement, // Better represents breathing/meditation
+                        iconColor: Colors.blue.shade600,
                         title: 'Breathe Exercise',
-                        onTap: () => Navigator.pushNamed(
-                          context,
-                          '/recovery-journal',
-                        ),
+                        onTap: () {},
                       ),
                       Divider(
                         height: 1,
@@ -197,13 +291,10 @@ class RelapseTrackerScreen extends StatelessWidget {
                             .surfaceContainerHighest,
                       ),
                       _RelapseMenuItem(
-                        icon: Icons.check,
-                        iconColor: Colors.yellow.shade900,
+                        icon: Icons.stars, // Better represents success stories
+                        iconColor: Colors.amber.shade700,
                         title: 'Sucesss Stories',
-                        onTap: () => Navigator.pushNamed(
-                          context,
-                          '/recovery-journal',
-                        ),
+                        onTap: () {},
                       ),
                     ],
                   ),

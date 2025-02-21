@@ -1,4 +1,4 @@
-class StringConstantsForPledge {
+class Constants {
   static const String pledgeBottomSheetHeading = 'Pledge Sobriety Today';
   static const String pledgeBottomSheetSubHeading =
       "Make a commitment to yourself not to masturbate for today. You'll receive a notification in 24 hours to check in and see how you did.";

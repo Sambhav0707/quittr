@@ -8,7 +8,6 @@ import 'package:quittr/features/meditate/data/datasources/meditate_loacal_data_s
 import 'package:quittr/features/meditate/data/repository/quotes_repository_impl.dart';
 import 'package:quittr/features/meditate/domain/repository/quotes_repository.dart';
 import 'package:quittr/features/meditate/domain/usecases/get_quotes.dart';
-import 'package:quittr/features/meditate/presentation/bloc/quotes_bloc.dart';
 import 'package:quittr/features/motivaton/data/data_sources/motivation_quotes_local_datasource.dart';
 import 'package:quittr/features/motivaton/data/repository/motivational_quotes_repository_impl.dart';
 import 'package:quittr/features/motivaton/domain/repository/motivation_quotes_repository.dart';
@@ -115,8 +114,6 @@ Future<void> init() async {
   sl.registerFactory<QuotesRepository>(() => QuotesRepositoryImpl(sl()));
 
   sl.registerFactory(() => GetQuotes(sl()));
-
- 
 
   // Paywall
   sl.registerLazySingleton(

@@ -34,7 +34,7 @@ class PledgeSuccessWidget extends StatelessWidget {
           ),
           Text(
             textAlign: TextAlign.center,
-            "${StringConstantsForPledge.pledgeDialougeBoxSubHeading} Remember why you started , goog luck!",
+            "${Constants.pledgeDialougeBoxSubHeading} Remember why you started , goog luck!",
             style: TextStyle(
               fontSize: 10,
               fontWeight: FontWeight.bold,

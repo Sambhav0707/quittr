@@ -23,18 +23,18 @@ class PledgeBottomSheetContainerWidget extends StatelessWidget {
         children: [
           _buildRowOne(
             Icons.check,
-            StringConstantsForPledge.pledgeBottomSheetBoxHeading1,
-            StringConstantsForPledge.pledgeBottomSheetBoxSubHeading1,
+            Constants.pledgeBottomSheetBoxHeading1,
+            Constants.pledgeBottomSheetBoxSubHeading1,
           ),
           _buildRowTwo(
             CupertinoIcons.wand_stars,
-            StringConstantsForPledge.pledgeBottomSheetBoxHeading2,
-            StringConstantsForPledge.pledgeBottomSheetBoxSubHeading2,
+            Constants.pledgeBottomSheetBoxHeading2,
+            Constants.pledgeBottomSheetBoxSubHeading2,
           ),
           _buildRowThree(
             Icons.headset,
-            StringConstantsForPledge.pledgeBottomSheetBoxHeading3,
-            StringConstantsForPledge.pledgeBottomSheetBoxSubHeading3,
+            Constants.pledgeBottomSheetBoxHeading3,
+            Constants.pledgeBottomSheetBoxSubHeading3,
           ),
         ],
       ),

@@ -27,12 +27,11 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
 
   void _onContinuePressed() {
     if (_formKey.currentState?.validate() ?? false) {
-      context.read<AuthBloc>().add(
-            SignInWithEmailPassword(
-              email: _emailController.text,
-              password: _passwordController.text,
-            ),
-          );
+      final event = SignInWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+      context.read<AuthBloc>().add(event);
     }
   }
 
@@ -42,9 +41,9 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
       appBar: AppBar(),
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
-          if (state.errorMessage != null) {
+          if (state is AuthError) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.errorMessage!)),
+              SnackBar(content: Text(state.message)),
             );
           }
         },
@@ -111,7 +110,7 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                       return AuthButton(
                         text: 'Continue',
                         onPressed: _onContinuePressed,
-                        isLoading: state.isLoading,
+                        isLoading: state is AuthLoading,
                       );
                     },
                   ),

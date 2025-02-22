@@ -5,12 +5,7 @@ import 'package:quittr/features/paywall/domain/entities/product.dart';
 import '../bloc/paywall_bloc.dart';
 
 class PaywallScreen extends StatefulWidget {
-  final Map userInfo;
-
-  const PaywallScreen({
-    super.key,
-    required this.userInfo,
-  });
+  const PaywallScreen({super.key});
 
   @override
   State<PaywallScreen> createState() => _PaywallScreenState();
@@ -146,11 +141,11 @@ class _PaywallScreenState extends State<PaywallScreen> {
                                     selectedSubscriptionId == null
                                 ? null
                                 : () {
-                                    context.read<PaywallBloc>().add(
-                                          PurchaseProductEvent(
-                                            selectedSubscriptionId!,
-                                          ),
-                                        );
+                                    context
+                                        .read<PaywallBloc>()
+                                        .add(PurchaseProductEvent(
+                                          selectedSubscriptionId!,
+                                        ));
                                   },
                             style: FilledButton.styleFrom(
                               minimumSize: const Size.fromHeight(56),

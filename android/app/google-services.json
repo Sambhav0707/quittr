@@ -7,28 +7,12 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1019009831264:android:4c061c4607cb384162ce05",
+        "mobilesdk_app_id": "1:1019009831264:android:b155cb8b3f1c96fe62ce05",
         "android_client_info": {
-          "package_name": "quit.addition.app"
+          "package_name": "quit.addiction.app"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "1019009831264-u0lufeesegd1qk4ddihcdtlqr6cj212s.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "quit.addition.app",
-            "certificate_hash": "856ead67d4b2263ea38e3edc412930a83d76106b"
-          }
-        },
-        {
-          "client_id": "1019009831264-vd8p7os7h3tsd41maviufu5qbu8ssmog.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "quit.addition.app",
-            "certificate_hash": "ca42c99b2965148997ad1ea150e18de94c6e894b"
-          }
-        },
         {
           "client_id": "1019009831264-2cpqtnrevrqscr7inbrqvvlsbaubmkd5.apps.googleusercontent.com",
           "client_type": 3

@@ -4,6 +4,8 @@ import 'package:quittr/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:quittr/features/auth/presentation/screens/auth_screen.dart';
 import 'package:quittr/features/home/presentation/screens/home_screen.dart';
 import 'package:quittr/features/onboarding/presentation/screens/quiz/get_started_screen.dart';
+import 'package:quittr/features/paywall/presentation/bloc/paywall_bloc.dart';
+import 'package:quittr/features/paywall/presentation/screens/paywall_screen.dart';
 
 class AuthWrapper extends StatelessWidget {
   const AuthWrapper({super.key});
@@ -12,20 +14,27 @@ class AuthWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state.errorMessage != null) {
+        if (state is AuthError) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.errorMessage!)),
+            SnackBar(content: Text(state.message)),
           );
         }
       },
-      child: BlocBuilder<AuthBloc, AuthState>(
-        builder: (context, state) {
-          if (state.user != null) {
-            return const HomeScreen();
-          }
-          return const GetStartedScreen();
-        },
-      ),
+      child: BlocBuilder<PaywallBloc, PaywallState>(
+          builder: (context, paywallState) {
+        return BlocBuilder<AuthBloc, AuthState>(
+          builder: (context, state) {
+            if (state is AuthAuthenticated) {
+              if (paywallState.hasValidSubscription) {
+                return const HomeScreen();
+              } else {
+                return const PaywallScreen();
+              }
+            }
+            return const GetStartedScreen();
+          },
+        );
+      }),
     );
   }
 }

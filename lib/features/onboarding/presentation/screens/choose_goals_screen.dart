@@ -76,11 +76,10 @@ class _ChooseGoalsScreenState extends State<ChooseGoalsScreen> {
       'goals': _selectedGoals.toList(),
     };
 
-    Navigator.pushReplacement(
+    Navigator.pushNamed(
       context,
-      MaterialPageRoute(
-        builder: (_) => PaywallScreen(userInfo: completeUserInfo),
-      ),
+      '/paywall',
+      arguments: completeUserInfo,
     );
   }
 

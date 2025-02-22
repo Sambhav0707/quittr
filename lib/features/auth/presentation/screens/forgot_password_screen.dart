@@ -38,12 +38,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       ),
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
-          if (state.errorMessage != null) {
+          if (state is AuthError) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(state.errorMessage!)),
+              SnackBar(content: Text(state.message)),
             );
           }
-          if (!state.isLoading && state.errorMessage == null) {
+          if (state is! AuthLoading && state is! AuthError) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
                 content: Text('Password reset email sent successfully!'),
@@ -88,7 +88,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       return AuthButton(
                         text: 'Send Reset Link',
                         onPressed: _onResetPasswordPressed,
-                        isLoading: state.isLoading,
+                        isLoading: state is AuthLoading,
                       );
                     },
                   ),

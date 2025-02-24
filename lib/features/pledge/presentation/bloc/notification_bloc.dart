@@ -45,7 +45,7 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
           emit(NotificationError(error: failure.message));
         },
         (_) {
-          log("Notification scheduled successfully!");
+          log("Notification scheduled successfully!!!");
           emit(NotificationScheduled());
         },
       );

@@ -75,6 +75,8 @@ dependencies:
   sign_in_with_apple: ^5.0.0
   crypto: ^3.0.3
   change_app_package_name: ^1.4.0
+  flutter_local_notifications: ^18.0.1
+  timezone: ^0.10.0
 
 dev_dependencies:
   flutter_test:

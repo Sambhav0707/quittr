@@ -89,11 +89,9 @@ class QuittrApp extends StatelessWidget {
               '/motivation-screen': (context) => const MotivationScreen(),
               '/breathing-exercise-screen': (context) =>
                   const BreathingExcercisePage(),
-
-                  '/side-effects-screen' : (context) => const SideEffectsScreen(),
-                  '/craving-controll-screen' : (context) => const CravingControll(),
-                   '/detox-screen' : (context) => const DetoxScreen(),
               '/side-effects-screen': (context) => const SideEffectsScreen(),
+              '/craving-controll-screen': (context) => const CravingControll(),
+              '/detox-screen': (context) => const DetoxScreen(),
               '/onboarding-quiz': (context) => const QuizQuestionsScreen(),
             },
           );

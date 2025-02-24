@@ -45,7 +45,7 @@ void main() async {
   // Set up BlocObserver
   Bloc.observer = AppBlocObserver();
 
-  ///these were for testing can be ignored
+  ///these were for testing can be ignored and can be removed
 
   // final FlutterLocalNotificationsPlugin notificationsPlugin =
   //     FlutterLocalNotificationsPlugin();

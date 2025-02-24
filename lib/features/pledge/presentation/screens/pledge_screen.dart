@@ -1,8 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
 import 'package:quittr/core/constants/string_constants.dart';
+import 'package:quittr/features/pledge/presentation/bloc/notification_bloc.dart';
 import 'package:quittr/features/pledge/presentation/widgets/pledge_dialog.dart';
 import 'package:quittr/features/pledge/presentation/widgets/pledge_success_widget.dart';
 import 'package:quittr/features/relapse_tracker/presentation/bloc/relapse_tracker_bloc.dart';
@@ -16,6 +20,13 @@ class PledgeScreen extends StatefulWidget {
 }
 
 class _PledgeScreenState extends State<PledgeScreen> {
+  final sl = GetIt.instance;
+  @override
+  void dispose() {
+    NotificationBloc(sl(), sl()).close();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
@@ -157,6 +168,16 @@ class _PledgeScreenState extends State<PledgeScreen> {
                     if (state is RelapseTrackerPledgeConfirmed) {
                       return GestureDetector(
                         onTap: () {
+                          log("Triggering scheduled notification...");
+                          context
+                              .read<NotificationBloc>()
+                              .dataSource
+                              .scheduleNotification(
+                                  title: "Congratulations",
+                                  body:
+                                      "You've successfully pledged to stay sober.",
+                                  delay: Duration(seconds: 10));
+
                           Navigator.pop(context);
                         },
                         child: Container(

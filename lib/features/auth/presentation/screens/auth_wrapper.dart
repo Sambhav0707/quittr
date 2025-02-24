@@ -28,7 +28,7 @@ class AuthWrapper extends StatelessWidget {
               if (paywallState.hasValidSubscription) {
                 return const HomeScreen();
               } else {
-                return const PaywallScreen();
+                return const HomeScreen();
               }
             }
             return const GetStartedScreen();

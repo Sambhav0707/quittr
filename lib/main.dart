@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quittr/core/bloc_observer.dart';
 import 'package:quittr/core/injection_container.dart' as di;
@@ -19,6 +20,7 @@ import 'package:quittr/features/meditate/presentation/screens/meditate_screen.da
 import 'package:quittr/features/motivaton/presentation/screens/motivation_screen.dart';
 import 'package:quittr/features/onboarding/presentation/screens/quiz/quiz_questions_screen.dart';
 import 'package:quittr/features/paywall/presentation/screens/paywall_screen.dart';
+import 'package:quittr/features/pledge/presentation/bloc/notification_bloc.dart';
 import 'package:quittr/features/profile/presentation/screens/edit_profile_screen.dart';
 import 'package:quittr/features/reason/presentation/screens/reason_list_screen.dart';
 import 'package:quittr/features/relapse_tracker/presentation/bloc/relapse_tracker_bloc.dart';
@@ -43,6 +45,22 @@ void main() async {
   // Set up BlocObserver
   Bloc.observer = AppBlocObserver();
 
+  ///these were for testing can be ignored
+
+  // final FlutterLocalNotificationsPlugin notificationsPlugin =
+  //     FlutterLocalNotificationsPlugin();
+
+  // const AndroidNotificationChannel channel = AndroidNotificationChannel(
+  //   'your_channel_id',
+  //   'Scheduled Notifications',
+  //   importance: Importance.high,
+  // );
+
+  // await notificationsPlugin
+  //     .resolvePlatformSpecificImplementation<
+  //         AndroidFlutterLocalNotificationsPlugin>()
+  //     ?.createNotificationChannel(channel);
+
   runApp(const QuittrApp());
 }
 
@@ -64,6 +82,7 @@ class QuittrApp extends StatelessWidget {
         BlocProvider(create: (_) => RelapseTrackerBloc()),
         BlocProvider(create: (_) => BreathingBloc()),
         BlocProvider(create: (_) => CravingControllBloc()),
+        BlocProvider(create: (_) => NotificationBloc(di.sl(), di.sl())),
       ],
       child: BlocBuilder<ThemeCubit, bool>(
         builder: (context, isDarkMode) {

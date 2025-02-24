@@ -18,24 +18,11 @@ class AuthStatusChanged extends AuthEvent {
 
 class SignInWithGoogle extends AuthEvent {}
 
-class SignInWithEmailPassword extends AuthEvent {
+class SignInWithEmailAndPassword extends AuthEvent {
   final String email;
   final String password;
 
-  const SignInWithEmailPassword({
-    required this.email,
-    required this.password,
-  });
-
-  @override
-  List<Object> get props => [email, password];
-}
-
-class SignUp extends AuthEvent {
-  final String email;
-  final String password;
-
-  const SignUp({
+  const SignInWithEmailAndPassword({
     required this.email,
     required this.password,
   });
@@ -54,3 +41,5 @@ class ForgotPassword extends AuthEvent {
 }
 
 class SignOut extends AuthEvent {}
+
+class SignInWithApple extends AuthEvent {}

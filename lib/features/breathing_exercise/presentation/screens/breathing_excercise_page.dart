@@ -67,7 +67,7 @@ class _BreathingExcercisePageState extends State<BreathingExcercisePage>
                 ),
                 const SizedBox(height: 40),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
@@ -76,9 +76,11 @@ class _BreathingExcercisePageState extends State<BreathingExcercisePage>
                         Navigator.of(context).pop();
                       },
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        backgroundColor: Colors.white,
+                        foregroundColor: const Color(0xFF1A1B2E),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                          borderRadius: BorderRadius.circular(50),
                         ),
                       ),
                       child: const Text(

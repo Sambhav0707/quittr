@@ -1,4 +1,4 @@
-package quit.addition.app
+package quit.addiction.app
 
 import io.flutter.embedding.android.FlutterActivity
 

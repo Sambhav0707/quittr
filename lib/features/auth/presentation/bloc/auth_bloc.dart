@@ -11,13 +11,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   AuthBloc({required AuthRepository authRepository})
       : _authRepository = authRepository,
-        super(const AuthState.unauthenticated()) {
+        super(AuthUnauthenticated()) {
     on<AuthStatusChanged>(_onAuthStatusChanged);
     on<SignInWithGoogle>(_onSignInWithGoogle);
-    on<SignInWithEmailPassword>(_onSignInWithEmailPassword);
-    on<SignUp>(_onSignUp);
+    on<SignInWithEmailAndPassword>(_onSignInWithEmailAndPassword);
     on<ForgotPassword>(_onForgotPassword);
     on<SignOut>(_onSignOut);
+    on<SignInWithApple>(_onSignInWithApple);
 
     _authRepository.authStateChanges.listen(
       (user) => add(AuthStatusChanged(user)),
@@ -29,49 +29,34 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) {
     event.user != null
-        ? emit(AuthState.authenticated(event.user!))
-        : emit(const AuthState.unauthenticated());
+        ? emit(AuthAuthenticated(event.user!))
+        : emit(AuthUnauthenticated());
   }
 
   Future<void> _onSignInWithGoogle(
     SignInWithGoogle event,
     Emitter<AuthState> emit,
   ) async {
-    emit(const AuthState.loading());
+    emit(AuthLoading());
     final result = await _authRepository.signInWithGoogle();
     result.fold(
-      (failure) => emit(AuthState.error(failure.message)),
-      (user) => emit(AuthState.authenticated(user)),
+      (failure) => emit(AuthError(failure.message)),
+      (user) => emit(AuthLoggedIn(user)),
     );
   }
 
-  Future<void> _onSignInWithEmailPassword(
-    SignInWithEmailPassword event,
+  Future<void> _onSignInWithEmailAndPassword(
+    SignInWithEmailAndPassword event,
     Emitter<AuthState> emit,
   ) async {
-    emit(const AuthState.loading());
+    emit(AuthLoading());
     final result = await _authRepository.signInWithEmailAndPassword(
       event.email,
       event.password,
     );
     result.fold(
-      (failure) => emit(AuthState.error(failure.message)),
-      (user) => emit(AuthState.authenticated(user)),
-    );
-  }
-
-  Future<void> _onSignUp(
-    SignUp event,
-    Emitter<AuthState> emit,
-  ) async {
-    emit(const AuthState.loading());
-    final result = await _authRepository.signUp(
-      event.email,
-      event.password,
-    );
-    result.fold(
-      (failure) => emit(AuthState.error(failure.message)),
-      (user) => emit(AuthState.authenticated(user)),
+      (failure) => emit(AuthError(failure.message)),
+      (user) => emit(AuthLoggedIn(user)),
     );
   }
 
@@ -79,11 +64,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     ForgotPassword event,
     Emitter<AuthState> emit,
   ) async {
-    emit(const AuthState.loading());
+    emit(AuthLoading());
     final result = await _authRepository.forgotPassword(event.email);
     result.fold(
-      (failure) => emit(AuthState.error(failure.message)),
-      (_) => emit(const AuthState.unauthenticated()),
+      (failure) => emit(AuthError(failure.message)),
+      (_) => emit(AuthForgotPasswordEmailSent()),
     );
   }
 
@@ -91,11 +76,23 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     SignOut event,
     Emitter<AuthState> emit,
   ) async {
-    emit(const AuthState.loading());
+    emit(AuthLoading());
     final result = await _authRepository.signOut();
     result.fold(
-      (failure) => emit(AuthState.error(failure.message)),
-      (_) => emit(const AuthState.unauthenticated()),
+      (failure) => emit(AuthError(failure.message)),
+      (_) => emit(AuthUnauthenticated()),
+    );
+  }
+
+  Future<void> _onSignInWithApple(
+    SignInWithApple event,
+    Emitter<AuthState> emit,
+  ) async {
+    emit(AuthLoading());
+    final result = await _authRepository.signInWithApple();
+    result.fold(
+      (failure) => emit(AuthError(failure.message)),
+      (user) => emit(AuthLoggedIn(user)),
     );
   }
 }

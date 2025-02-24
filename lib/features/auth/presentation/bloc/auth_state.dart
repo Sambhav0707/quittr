@@ -1,21 +1,43 @@
 part of 'auth_bloc.dart';
 
-class AuthState extends Equatable {
-  final User? user;
-  final bool isLoading;
-  final String? errorMessage;
-
-  const AuthState._({
-    this.user,
-    this.isLoading = false,
-    this.errorMessage,
-  });
-
-  const AuthState.authenticated(User user) : this._(user: user);
-  const AuthState.unauthenticated() : this._();
-  const AuthState.loading() : this._(isLoading: true);
-  const AuthState.error(String message) : this._(errorMessage: message);
+abstract class AuthState extends Equatable {
+  const AuthState();
 
   @override
-  List<Object?> get props => [user, isLoading, errorMessage];
+  List<Object?> get props => [];
 }
+
+class AuthInitial extends AuthState {}
+
+class AuthLoading extends AuthState {}
+
+class AuthAuthenticated extends AuthState {
+  final User user;
+
+  const AuthAuthenticated(this.user);
+
+  @override
+  List<Object> get props => [user];
+}
+
+class AuthUnauthenticated extends AuthState {}
+
+class AuthError extends AuthState {
+  final String message;
+
+  const AuthError(this.message);
+
+  @override
+  List<Object> get props => [message];
+}
+
+class AuthLoggedIn extends AuthState {
+  final User user;
+
+  const AuthLoggedIn(this.user);
+
+  @override
+  List<Object> get props => [user];
+}
+
+class AuthForgotPasswordEmailSent extends AuthState {}

@@ -2,28 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:quittr/features/onboarding/presentation/screens/quiz/quiz_questions_screen.dart';
 import 'package:quittr/features/paywall/presentation/bloc/paywall_bloc.dart';
 import '../bloc/auth_bloc.dart';
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({super.key});
-
-  void _onGoogleSignInPressed(BuildContext context) {
-    context.read<AuthBloc>().add(SignInWithGoogle());
-  }
-
-  void _onAppleSignInPressed(BuildContext context) {
-    // TODO: Implement Apple Sign In
-  }
-
-  void _startQuiz(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(
-      builder: (context) {
-        return const QuizQuestionsScreen();
-      },
-    ));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +15,13 @@ class AuthScreen extends StatelessWidget {
         builder: (context, paywallState) {
           return BlocListener<AuthBloc, AuthState>(
             listener: (context, state) {
-              if (state.errorMessage != null) {
+              if (state is AuthError) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(state.errorMessage!)),
+                  SnackBar(content: Text(state.message)),
                 );
               }
-              if (state.user != null) {
-                Navigator.pushNamed(context, '/home');
-                // _startQuiz(context);
+              if (state is AuthLoggedIn) {
+                _onLoggedIn(context, state, paywallState);
               }
             },
             child: Stack(
@@ -234,6 +216,31 @@ class AuthScreen extends StatelessWidget {
         },
       ),
     );
+  }
+
+  void _onLoggedIn(
+      BuildContext context, AuthLoggedIn authState, PaywallState paywallState) {
+    // If user is new, show quiz questions screen, else if user has
+    // a subscription, show home screen, else show paywall screen.
+    if (authState.user.isNewUser) {
+      _startQuiz(context);
+    } else if (paywallState.hasValidSubscription) {
+      Navigator.pushNamed(context, '/home');
+    } else {
+      Navigator.pushNamed(context, '/paywall');
+    }
+  }
+
+  void _onGoogleSignInPressed(BuildContext context) {
+    context.read<AuthBloc>().add(SignInWithGoogle());
+  }
+
+  void _onAppleSignInPressed(BuildContext context) {
+    context.read<AuthBloc>().add(SignInWithApple());
+  }
+
+  void _startQuiz(BuildContext context) {
+    Navigator.pushNamed(context, '/onboarding-quiz');
   }
 
   Widget _buildAuthButton(

@@ -47,7 +47,9 @@ class PaywallBloc extends Bloc<PaywallEvent, PaywallState> {
       (failure) => add(PurchaseError(failure.message)),
       (stream) {
         _purchaseSubscription = stream.listen(
-          (purchaseDetails) => add(PurchaseUpdated(purchaseDetails)),
+          (purchaseDetails) {
+            add(PurchaseUpdated(purchaseDetails));
+          },
         );
       },
     );

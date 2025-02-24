@@ -17,6 +17,8 @@ import 'package:quittr/features/home/presentation/screens/home_screen.dart';
 import 'package:quittr/features/meditate/presentation/screens/meditate_screen.dart'
     as meditate;
 import 'package:quittr/features/motivaton/presentation/screens/motivation_screen.dart';
+import 'package:quittr/features/onboarding/presentation/screens/quiz/quiz_questions_screen.dart';
+import 'package:quittr/features/paywall/presentation/screens/paywall_screen.dart';
 import 'package:quittr/features/profile/presentation/screens/edit_profile_screen.dart';
 import 'package:quittr/features/reason/presentation/screens/reason_list_screen.dart';
 import 'package:quittr/features/relapse_tracker/presentation/bloc/relapse_tracker_bloc.dart';
@@ -77,6 +79,7 @@ class QuittrApp extends StatelessWidget {
               '/home': (context) => const HomeScreen(),
               '/auth': (context) => const AuthScreen(),
               '/email-auth': (context) => const EmailAuthScreen(),
+              '/paywall': (context) => const PaywallScreen(),
               '/forgot-password': (context) => const ForgotPasswordScreen(),
               '/edit-profile': (context) => const EditProfileScreen(),
               '/settings': (context) => const SettingsScreen(),
@@ -90,6 +93,8 @@ class QuittrApp extends StatelessWidget {
                   '/side-effects-screen' : (context) => const SideEffectsScreen(),
                   '/craving-controll-screen' : (context) => const CravingControll(),
                    '/detox-screen' : (context) => const DetoxScreen(),
+              '/side-effects-screen': (context) => const SideEffectsScreen(),
+              '/onboarding-quiz': (context) => const QuizQuestionsScreen(),
             },
           );
         },

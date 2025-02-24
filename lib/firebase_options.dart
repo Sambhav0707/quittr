@@ -52,7 +52,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBD90xccKsSAbX5nuD3_T7BApxjWF5exZA',
-    appId: '1:1019009831264:android:4c061c4607cb384162ce05',
+    appId: '1:1019009831264:android:b155cb8b3f1c96fe62ce05',
     messagingSenderId: '1019009831264',
     projectId: 'quittr-22220',
     storageBucket: 'quittr-22220.firebasestorage.app',
@@ -60,11 +60,13 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAFxLtjVThNthSmNlHyOQicv7wtsKjq030',
-    appId: '1:1019009831264:ios:81cd310ab4eb061a62ce05',
+    appId: '1:1019009831264:ios:24564d8547e3d21462ce05',
     messagingSenderId: '1019009831264',
     projectId: 'quittr-22220',
     storageBucket: 'quittr-22220.firebasestorage.app',
-    iosBundleId: 'quit.addition.app',
+    androidClientId: '1019009831264-u0lufeesegd1qk4ddihcdtlqr6cj212s.apps.googleusercontent.com',
+    iosClientId: '1019009831264-ugaf4mk3en2naqokvd2ac83kvgq3vn9g.apps.googleusercontent.com',
+    iosBundleId: 'quit.addiction.app',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(

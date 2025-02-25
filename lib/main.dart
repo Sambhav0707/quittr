@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quittr/core/bloc_observer.dart';
 import 'package:quittr/core/injection_container.dart' as di;
@@ -10,12 +11,16 @@ import 'package:quittr/features/auth/presentation/screens/auth_wrapper.dart';
 import 'package:quittr/features/auth/presentation/screens/forgot_password_screen.dart';
 import 'package:quittr/features/breathing_exercise/presentation/bloc/breathing_bloc.dart';
 import 'package:quittr/features/breathing_exercise/presentation/screens/breathing_excercise_page.dart';
+import 'package:quittr/features/craving%20control/presentation/bloc/craving_controll_bloc.dart';
+import 'package:quittr/features/craving%20control/presentation/screens/craving_controll.dart';
+import 'package:quittr/features/detox/presentation/screens/detox_screen.dart';
 import 'package:quittr/features/home/presentation/screens/home_screen.dart';
 import 'package:quittr/features/meditate/presentation/screens/meditate_screen.dart'
     as meditate;
 import 'package:quittr/features/motivaton/presentation/screens/motivation_screen.dart';
 import 'package:quittr/features/onboarding/presentation/screens/quiz/quiz_questions_screen.dart';
 import 'package:quittr/features/paywall/presentation/screens/paywall_screen.dart';
+import 'package:quittr/features/pledge/presentation/bloc/notification_bloc.dart';
 import 'package:quittr/features/profile/presentation/screens/edit_profile_screen.dart';
 import 'package:quittr/features/reason/presentation/screens/reason_list_screen.dart';
 import 'package:quittr/features/relapse_tracker/presentation/bloc/relapse_tracker_bloc.dart';
@@ -40,6 +45,22 @@ void main() async {
   // Set up BlocObserver
   Bloc.observer = AppBlocObserver();
 
+  ///these were for testing can be ignored and can be removed
+
+  // final FlutterLocalNotificationsPlugin notificationsPlugin =
+  //     FlutterLocalNotificationsPlugin();
+
+  // const AndroidNotificationChannel channel = AndroidNotificationChannel(
+  //   'your_channel_id',
+  //   'Scheduled Notifications',
+  //   importance: Importance.high,
+  // );
+
+  // await notificationsPlugin
+  //     .resolvePlatformSpecificImplementation<
+  //         AndroidFlutterLocalNotificationsPlugin>()
+  //     ?.createNotificationChannel(channel);
+
   runApp(const QuittrApp());
 }
 
@@ -60,6 +81,8 @@ class QuittrApp extends StatelessWidget {
         ),
         BlocProvider(create: (_) => RelapseTrackerBloc()),
         BlocProvider(create: (_) => BreathingBloc()),
+        BlocProvider(create: (_) => CravingControllBloc()),
+        BlocProvider(create: (_) => NotificationBloc(di.sl(), di.sl())),
       ],
       child: BlocBuilder<ThemeCubit, bool>(
         builder: (context, isDarkMode) {
@@ -86,6 +109,8 @@ class QuittrApp extends StatelessWidget {
               '/breathing-exercise-screen': (context) =>
                   const BreathingExcercisePage(),
               '/side-effects-screen': (context) => const SideEffectsScreen(),
+              '/craving-controll-screen': (context) => const CravingControll(),
+              '/detox-screen': (context) => const DetoxScreen(),
               '/onboarding-quiz': (context) => const QuizQuestionsScreen(),
             },
           );

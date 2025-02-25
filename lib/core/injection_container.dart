@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -15,6 +16,11 @@ import 'package:quittr/features/motivaton/domain/usecases/get_motivationalQuotes
 import 'package:quittr/features/paywall/data/datasources/purchase_data_source.dart';
 import 'package:quittr/features/paywall/domain/usecases/verify_subscription.dart';
 import 'package:quittr/features/paywall/presentation/bloc/paywall_bloc.dart';
+import 'package:quittr/features/pledge/data/data%20sources/local_notification_datasource.dart';
+import 'package:quittr/features/pledge/data/repository/local_notification_repository_impl.dart';
+import 'package:quittr/features/pledge/domain/repository/local_notification_repository.dart';
+import 'package:quittr/features/pledge/domain/usecases/schedule_notification.dart';
+import 'package:quittr/features/pledge/presentation/bloc/notification_bloc.dart';
 import 'package:quittr/features/side%20effects/data/data_sources/side_effects_local_datasource.dart';
 import 'package:quittr/features/side%20effects/data/repository/side_effects_repository_impl.dart';
 import 'package:quittr/features/side%20effects/domian/repository/side_effectes_repository.dart';
@@ -70,6 +76,8 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GoogleSignIn());
   sl.registerLazySingleton(() => FirebaseFirestore.instance);
   sl.registerLazySingleton(() => FirebaseStorage.instance);
+
+  sl.registerLazySingleton(() => FlutterLocalNotificationsPlugin());
 
   // Services
   sl.registerLazySingleton<ImagePickerService>(
@@ -159,4 +167,19 @@ Future<void> init() async {
   sl.registerFactory<SideEffectesRepository>(
       () => SideEffectsRepositoryImpl(sl()));
   sl.registerFactory(() => GetSideEffects(sl()));
+
+  // Features :- Notification
+
+  sl.registerLazySingleton(() {
+    final dataSource = LocalNotificationDataSourceImpl(sl());
+    dataSource.initialize(); // Ensures it's initialized
+    return dataSource;
+  });
+
+  sl.registerLazySingleton<LocalNotificationRepository>(
+      () => LocalNotificationRepositoryImpl(sl()));
+
+  sl.registerLazySingleton(() => ScheduleNotification(sl()));
+
+  sl.registerLazySingleton(() => NotificationBloc(sl(), sl()));
 }

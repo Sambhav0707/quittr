@@ -137,6 +137,111 @@ class RelapseTrackerScreen extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 12, bottom: 5),
                   child: Text(
+                    "Protection",
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              Card(
+                elevation: 0,
+                margin: EdgeInsets.zero,
+                clipBehavior: Clip.antiAlias,
+                color: Theme.of(context)
+                    .colorScheme
+                    .surfaceContainerHighest
+                    .withAlpha(80),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 0,
+                  ),
+                  child: Column(
+                    children: [
+                      _RelapseMenuItem(
+                        icon: Icons
+                            .lightbulb_outline, // Better icon for motivation/change
+                        iconColor:
+                            Colors.orange.shade800, // Motivation/change related
+                        title: 'Craving Controll',
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          '/craving-controll-screen',
+                        ),
+                      ),
+                      Divider(
+                        height: 1,
+                        color: Theme.of(context)
+                            .colorScheme
+                            .surfaceContainerHighest,
+                      ),
+                      _RelapseMenuItem(
+                        icon: Icons.forum_outlined, // Better icon for chat
+                        iconColor: Colors.indigo.shade600, // Communication
+                        title: 'Internet Filter',
+                        onTap: () {},
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 12, bottom: 5),
+                  child: Text(
+                    "Recovery",
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              Card(
+                elevation: 0,
+                margin: EdgeInsets.zero,
+                clipBehavior: Clip.antiAlias,
+                color: Theme.of(context)
+                    .colorScheme
+                    .surfaceContainerHighest
+                    .withAlpha(80),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 0,
+                  ),
+                  child: Column(
+                    children: [
+                      _RelapseMenuItem(
+                        icon: Icons
+                            .lightbulb_outline, // Better icon for motivation/change
+                        iconColor:
+                            Colors.orange.shade800, // Motivation/change related
+                        title: 'Detox',
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          '/detox-screen',
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 12, bottom: 5),
+                  child: Text(
                     "Main",
                     style: Theme.of(context)
                         .textTheme

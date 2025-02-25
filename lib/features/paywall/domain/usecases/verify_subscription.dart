@@ -12,13 +12,12 @@ class VerifySubscription implements UseCase<bool, NoParams> {
   @override
   Future<Either<Failure, bool>> call(NoParams params) async {
     final purchases = await repository.getAvailablePurchases();
-    purchases.fold(
+    return purchases.fold(
       (failure) => Left(failure),
       (purchases) {
         final hasSubscription = purchases?.isNotEmpty ?? false;
         return Right(hasSubscription);
       },
     );
-    return Right(false);
   }
 }

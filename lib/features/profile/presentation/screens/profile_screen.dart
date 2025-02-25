@@ -277,7 +277,10 @@ class ProfileScreen extends StatelessWidget {
           FilledButton(
             onPressed: () {
               context.read<ProfileBloc>().add(SignOut());
-              Navigator.pop(context);
+              while (Navigator.canPop(context)) {
+                Navigator.pop(context);
+              }
+              Navigator.pushNamed(context, '/get-started');
             },
             child: const Text('Sign Out'),
           ),

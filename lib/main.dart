@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quittr/core/bloc_observer.dart';
 import 'package:quittr/core/injection_container.dart' as di;
@@ -20,6 +21,7 @@ import 'package:quittr/features/meditate/presentation/screens/meditate_screen.da
 import 'package:quittr/features/motivaton/presentation/screens/motivation_screen.dart';
 import 'package:quittr/features/onboarding/presentation/screens/quiz/quiz_questions_screen.dart';
 import 'package:quittr/features/paywall/presentation/screens/paywall_screen.dart';
+import 'package:quittr/features/pledge/data/data%20sources/local_notification_datasource.dart';
 import 'package:quittr/features/pledge/presentation/bloc/notification_bloc.dart';
 import 'package:quittr/features/profile/presentation/screens/edit_profile_screen.dart';
 import 'package:quittr/features/reason/presentation/screens/reason_list_screen.dart';
@@ -35,6 +37,8 @@ import 'package:quittr/features/paywall/presentation/bloc/paywall_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await GetStorage.init();
 
   // Initialize Firebase
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
@@ -61,11 +65,30 @@ void main() async {
   //         AndroidFlutterLocalNotificationsPlugin>()
   //     ?.createNotificationChannel(channel);
 
-  runApp(const QuittrApp());
+  // Check for notification launch after app is ready
+  // WidgetsBinding.instance.addPostFrameCallback((_) {
+  //   final localNotificationDataSource =
+  //       di.sl<LocalNotificationDataSourceImpl>();
+  //   localNotificationDataSource.checkForNotifications();
+  //   localNotificationDataSource
+  //       .showNotificationDialog(null); // Check for notifications
+  // });
+
+
+    // Check for notification launch after app is ready
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    final localNotificationDataSource = di.sl<LocalNotificationDataSourceImpl>();
+    localNotificationDataSource.checkForNotifications(); // Check for notifications
+    LocalNotificationDataSourceImpl.showNotificationDialog(null); // Show dialog on app start
+  });
+  runApp(QuittrApp(
+    navigatorKey: di.sl(),
+  ));
 }
 
 class QuittrApp extends StatelessWidget {
-  const QuittrApp({super.key});
+  final GlobalKey<NavigatorState> navigatorKey;
+  const QuittrApp({super.key, required this.navigatorKey});
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +111,7 @@ class QuittrApp extends StatelessWidget {
         builder: (context, isDarkMode) {
           final theme = MaterialTheme(GoogleFonts.poppinsTextTheme());
           return MaterialApp(
+            navigatorKey: navigatorKey,
             title: 'Quittr',
             debugShowCheckedModeBanner: false,
             theme: theme.light(),

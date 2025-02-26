@@ -15,3 +15,8 @@ class ScheduleNotificationEvent extends NotificationEvent {
   });
 }
 
+
+final class RelapseTrackerPledgeConfirmEvent extends NotificationEvent {}
+
+final class RelapseTrackerBottomSheetOpenEvent extends NotificationEvent {}
+

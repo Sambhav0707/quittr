@@ -50,13 +50,13 @@ class _RelapseTrackerScreenState extends State<RelapseTrackerScreen> {
 
   late RelapseTrackerBloc _relapseTrackerBloc;
 
-  late bool user;
+  // late bool user;
 
   @override
   void initState() {
     super.initState();
     _relapseTrackerBloc = context.read<RelapseTrackerBloc>();
-    user = (context.read<AuthBloc>().state as AuthAuthenticated).user.isNewUser;
+    // user = (context.read<AuthBloc>().state as AuthAuthenticated).user.isNewUser;
 
     if (PrefUtils().getRelapsedDates().isNotEmpty) {
       _relapseTrackerBloc.add(RelapseTrackerStartTimerEvent());

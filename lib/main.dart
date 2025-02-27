@@ -19,6 +19,7 @@ import 'package:quittr/features/home/presentation/screens/home_screen.dart';
 import 'package:quittr/features/meditate/presentation/screens/meditate_screen.dart'
     as meditate;
 import 'package:quittr/features/motivaton/presentation/screens/motivation_screen.dart';
+import 'package:quittr/features/onboarding/presentation/screens/quiz/get_started_screen.dart';
 import 'package:quittr/features/onboarding/presentation/screens/quiz/quiz_questions_screen.dart';
 import 'package:quittr/features/paywall/presentation/screens/paywall_screen.dart';
 import 'package:quittr/features/pledge/data/data%20sources/local_notification_datasource.dart';
@@ -75,12 +76,7 @@ void main() async {
   // });
 
 
-    // Check for notification launch after app is ready
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    final localNotificationDataSource = di.sl<LocalNotificationDataSourceImpl>();
-    localNotificationDataSource.checkForNotifications(); // Check for notifications
-    LocalNotificationDataSourceImpl.showNotificationDialog(null); // Show dialog on app start
-  });
+  
   runApp(QuittrApp(
     navigatorKey: di.sl(),
   ));
@@ -136,6 +132,7 @@ class QuittrApp extends StatelessWidget {
               '/craving-controll-screen': (context) => const CravingControll(),
               '/detox-screen': (context) => const DetoxScreen(),
               '/onboarding-quiz': (context) => const QuizQuestionsScreen(),
+              '/get-started' : (context) => const GetStartedScreen(),
             },
           );
         },

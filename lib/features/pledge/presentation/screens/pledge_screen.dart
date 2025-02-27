@@ -172,12 +172,16 @@ class _PledgeScreenState extends State<PledgeScreen> {
                               .read<NotificationBloc>()
                               .dataSource
                               .scheduleNotification(
-                                title: "Congratulations",
-                                body:
-                                    "You've successfully pledged to stay sober.",
-                                delay: Duration(seconds: 10),
-                                 payload: "pledge_success"
-                              );
+                                  title: "Congratulations",
+                                  body:
+                                      "You've successfully pledged to stay sober.",
+                                  delay: Duration(seconds: 10),
+                                  payload: "pledge_success");
+
+                          // context
+                          //     .read<NotificationBloc>()
+                          //     .dataSource
+                          //     .showInstantNotification();
 
                           Navigator.pop(context);
                         },

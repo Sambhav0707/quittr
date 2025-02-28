@@ -16,7 +16,35 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
       : super(NotificationInitial()) {
     _initialize();
     on<ScheduleNotificationEvent>(_onScheduleNotification);
+     on<RelapseTrackerPledgeConfirmEvent>(_onRelapseTrackerPledgeConfirmEvent);
+    on<RelapseTrackerBottomSheetOpenEvent>(
+        _onRelapseTrackerPledgeBottomSheetEvent);
+
+
+
   }
+
+
+  
+  void _onRelapseTrackerPledgeConfirmEvent(
+      RelapseTrackerPledgeConfirmEvent event,
+      Emitter<NotificationState> emit) async {
+    emit(RelapseTrackerLoading());
+    await Future.delayed(Duration.zero);
+    emit(RelapseTrackerPledgeConfirmed());
+  }
+
+  void _onRelapseTrackerPledgeBottomSheetEvent(
+      RelapseTrackerBottomSheetOpenEvent event,
+      Emitter<NotificationState> emit) async {
+    emit(RelapseTrackerLoading());
+    await Future.delayed(Duration.zero);
+    emit(NotificationInitial());
+  }
+
+
+
+
 
   Future<void> _initialize() async {
     try {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:quittr/features/paywall/presentation/screens/paywall_screen.dart';
 
 class ChooseGoalsScreen extends StatefulWidget {
   final Map userInfo;

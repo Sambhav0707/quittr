@@ -9,7 +9,6 @@ import 'package:quittr/core/constants/string_constants.dart';
 import 'package:quittr/features/pledge/presentation/bloc/notification_bloc.dart';
 import 'package:quittr/features/pledge/presentation/widgets/pledge_dialog.dart';
 import 'package:quittr/features/pledge/presentation/widgets/pledge_success_widget.dart';
-import 'package:quittr/features/relapse_tracker/presentation/bloc/relapse_tracker_bloc.dart';
 import 'package:quittr/features/pledge/presentation/widgets/pledge_bottom_sheet_container_widget.dart';
 
 class PledgeScreen extends StatefulWidget {
@@ -78,7 +77,7 @@ class _PledgeScreenState extends State<PledgeScreen> {
               ),
 
               // Scrollable Content
-              BlocBuilder<RelapseTrackerBloc, RelapseTrackerState>(
+              BlocBuilder<NotificationBloc, NotificationState>(
                 builder: (context, state) {
                   if (state is RelapseTrackerLoading) {
                     return const Center(child: CircularProgressIndicator());
@@ -163,7 +162,7 @@ class _PledgeScreenState extends State<PledgeScreen> {
               // Fixed Footer
               Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: BlocBuilder<RelapseTrackerBloc, RelapseTrackerState>(
+                child: BlocBuilder<NotificationBloc, NotificationState>(
                   builder: (context, state) {
                     if (state is RelapseTrackerPledgeConfirmed) {
                       return GestureDetector(
@@ -176,7 +175,13 @@ class _PledgeScreenState extends State<PledgeScreen> {
                                   title: "Congratulations",
                                   body:
                                       "You've successfully pledged to stay sober.",
-                                  delay: Duration(seconds: 10));
+                                  delay: Duration(seconds: 10),
+                                  payload: "pledge_success");
+
+                          // context
+                          //     .read<NotificationBloc>()
+                          //     .dataSource
+                          //     .showInstantNotification();
 
                           Navigator.pop(context);
                         },
@@ -209,7 +214,7 @@ class _PledgeScreenState extends State<PledgeScreen> {
                               onPledge: () {
                                 Navigator.pop(context);
                                 context
-                                    .read<RelapseTrackerBloc>()
+                                    .read<NotificationBloc>()
                                     .add(RelapseTrackerPledgeConfirmEvent());
                               },
                             );

@@ -223,7 +223,8 @@ class AuthScreen extends StatelessWidget {
     // If user is new, show quiz questions screen, else if user has
     // a subscription, show home screen, else show paywall screen.
     if (authState.user.isNewUser) {
-      _startQuiz(context);
+      // _startQuiz(context);
+      Navigator.pushNamed(context, '/home');
     } else if (paywallState.hasValidSubscription) {
       Navigator.pushNamed(context, '/home');
     } else {

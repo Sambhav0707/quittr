@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quittr/core/injection_container.dart';
+import 'package:quittr/core/pref%20utils/pref_utils.dart';
 import 'package:quittr/features/auth/domain/repositories/auth_repository.dart';
 import 'package:quittr/features/profile/domain/repositories/profile_repository.dart';
 import 'package:quittr/features/profile/domain/usecases/update_profile_photo.dart';
@@ -248,7 +249,9 @@ class ProfileScreen extends StatelessWidget {
                             title: 'Sign Out',
                             textColor: Theme.of(context).colorScheme.error,
                             iconColor: Theme.of(context).colorScheme.error,
-                            onTap: () => _showSignOutDialog(context),
+                            onTap: () {
+                              _showSignOutDialog(context);
+                            },
                           ),
                         ],
                       ),
@@ -280,6 +283,7 @@ class ProfileScreen extends StatelessWidget {
               while (Navigator.canPop(context)) {
                 Navigator.pop(context);
               }
+              PrefUtils().resetTimer();
               Navigator.pushNamed(context, '/get-started');
             },
             child: const Text('Sign Out'),

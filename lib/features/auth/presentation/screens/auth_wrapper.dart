@@ -4,6 +4,7 @@ import 'package:quittr/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:quittr/features/home/presentation/screens/home_screen.dart';
 import 'package:quittr/features/onboarding/presentation/screens/quiz/get_started_screen.dart';
 import 'package:quittr/features/paywall/presentation/bloc/paywall_bloc.dart';
+import 'package:quittr/features/paywall/presentation/screens/paywall_screen.dart';
 
 class AuthWrapper extends StatelessWidget {
   const AuthWrapper({super.key});
@@ -26,7 +27,7 @@ class AuthWrapper extends StatelessWidget {
               if (paywallState.hasValidSubscription) {
                 return const HomeScreen();
               } else {
-                return const HomeScreen();
+                return const PaywallScreen();
               }
             }
             return const GetStartedScreen();

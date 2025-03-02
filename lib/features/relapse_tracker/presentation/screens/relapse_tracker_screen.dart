@@ -100,8 +100,9 @@ class _RelapseTrackerScreenState extends State<RelapseTrackerScreen> {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(100),
                   ),
+                  icon: Icon(Icons.timer_outlined),
                   backgroundColor:
-                      Theme.of(context).colorScheme.error.withAlpha(255),
+                      Theme.of(context).colorScheme.primary.withAlpha(255),
                   foregroundColor: Theme.of(context).colorScheme.onError,
                 )
               : FloatingActionButton.extended(
@@ -240,111 +241,6 @@ class _RelapseTrackerScreenState extends State<RelapseTrackerScreen> {
                     progressText: '0%',
                   ),
                   const SizedBox(height: 16),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 12, bottom: 5),
-                      child: Text(
-                        "Protection",
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium
-                            ?.copyWith(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                  Card(
-                    elevation: 0,
-                    margin: EdgeInsets.zero,
-                    clipBehavior: Clip.antiAlias,
-                    color: Theme.of(context)
-                        .colorScheme
-                        .surfaceContainerHighest
-                        .withAlpha(80),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 0,
-                      ),
-                      child: Column(
-                        children: [
-                          _RelapseMenuItem(
-                            icon: Icons
-                                .lightbulb_outline, // Better icon for motivation/change
-                            iconColor: Colors
-                                .orange.shade800, // Motivation/change related
-                            title: 'Craving Controll',
-                            onTap: () => Navigator.pushNamed(
-                              context,
-                              '/craving-controll-screen',
-                            ),
-                          ),
-                          Divider(
-                            height: 1,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .surfaceContainerHighest,
-                          ),
-                          _RelapseMenuItem(
-                            icon: Icons.forum_outlined, // Better icon for chat
-                            iconColor: Colors.indigo.shade600, // Communication
-                            title: 'Internet Filter',
-                            onTap: () {},
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 12, bottom: 5),
-                      child: Text(
-                        "Recovery",
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleMedium
-                            ?.copyWith(fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                  Card(
-                    elevation: 0,
-                    margin: EdgeInsets.zero,
-                    clipBehavior: Clip.antiAlias,
-                    color: Theme.of(context)
-                        .colorScheme
-                        .surfaceContainerHighest
-                        .withAlpha(80),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 0,
-                      ),
-                      child: Column(
-                        children: [
-                          _RelapseMenuItem(
-                            icon: Icons
-                                .lightbulb_outline, // Better icon for motivation/change
-                            iconColor: Colors
-                                .orange.shade800, // Motivation/change related
-                            title: 'Detox',
-                            onTap: () => Navigator.pushNamed(
-                              context,
-                              '/detox-screen',
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
@@ -503,6 +399,40 @@ class _RelapseTrackerScreenState extends State<RelapseTrackerScreen> {
                             onTap: () => Navigator.pushNamed(
                               context,
                               '/breathing-exercise-screen',
+                            ),
+                          ),
+                          Divider(
+                            height: 1,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .surfaceContainerHighest,
+                          ),
+                          _RelapseMenuItem(
+                            icon: Icons
+                                .psychology_outlined, // Brain/mind control related icon
+                            iconColor: Colors.teal
+                                .shade600, // Teal represents control/calmness
+                            title: 'Craving Controll',
+                            onTap: () => Navigator.pushNamed(
+                              context,
+                              '/craving-controll-screen',
+                            ),
+                          ),
+                          Divider(
+                            height: 1,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .surfaceContainerHighest,
+                          ),
+                          _RelapseMenuItem(
+                            icon: Icons
+                                .healing, // Medical/health related icon for detox
+                            iconColor: Colors.purple
+                                .shade600, // Purple represents healing/cleansing
+                            title: 'Detox',
+                            onTap: () => Navigator.pushNamed(
+                              context,
+                              '/detox-screen',
                             ),
                           ),
                           Divider(

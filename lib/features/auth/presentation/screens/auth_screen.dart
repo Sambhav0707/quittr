@@ -147,61 +147,7 @@ class AuthScreen extends StatelessWidget {
                                       context, '/email-auth'),
                                   icon: Icons.email_outlined,
                                 ),
-                                const SizedBox(height: 24),
-                                // If user has a subscription, don't show the skip option. User will login and go to home screen.
-                                if (!paywallState.hasValidSubscription)
-                                  Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Expanded(
-                                              child: Divider(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .outline)),
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 16),
-                                            child: Text(
-                                              'or',
-                                              style: TextStyle(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .outline,
-                                              ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                              child: Divider(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .outline)),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 24),
-                                      TextButton(
-                                        onPressed: () => _startQuiz(context),
-                                        style: TextButton.styleFrom(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 16),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                          ),
-                                        ),
-                                        child: Text(
-                                          'Skip for now',
-                                          style: TextStyle(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 16),
-                                    ],
-                                  )
+                                const SizedBox(height: 30),
                               ],
                             ),
                           ),
@@ -223,8 +169,7 @@ class AuthScreen extends StatelessWidget {
     // If user is new, show quiz questions screen, else if user has
     // a subscription, show home screen, else show paywall screen.
     if (authState.user.isNewUser) {
-      // _startQuiz(context);
-      Navigator.pushNamed(context, '/home');
+      _startQuiz(context);
     } else if (paywallState.hasValidSubscription) {
       Navigator.pushNamed(context, '/home');
     } else {

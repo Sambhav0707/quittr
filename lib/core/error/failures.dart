@@ -36,3 +36,16 @@ class CacheFailure extends Failure {
 class GeneralFailure extends Failure {
   const GeneralFailure(super.message);
 }
+
+
+// for IAP failures 
+
+class ProductNotFoundFailure extends Failure {
+  const ProductNotFoundFailure(super.message);
+}
+class PurchaseFailedFailure extends Failure {
+  const PurchaseFailedFailure(super.message);
+}
+class ConnectionFailedFailure extends Failure {
+  const ConnectionFailedFailure(super.message);
+}

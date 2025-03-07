@@ -1,8 +1,13 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_inapp_purchase/flutter_inapp_purchase.dart';
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:quittr/core/usecases/usecase.dart';
+import 'package:quittr/features/paywall/domain/repositories/purchase_repository.dart';
+import 'package:quittr/features/paywall/domain/usecases/dispose_subscription.dart';
+import 'package:quittr/features/paywall/domain/usecases/restore_purchaces.dart';
 import '../../domain/entities/product.dart';
 import '../../domain/usecases/get_subscriptions.dart';
 import '../../domain/usecases/initialize_purchases.dart';
@@ -82,10 +87,10 @@ class PaywallBloc extends Bloc<PaywallEvent, PaywallState> {
 
     final result = await _getProducts(
       const GetProductsParams(productIds: [
-        'monthly',
-        'yearly',
+        'gold_plan',
       ]),
     );
+    log(result.toString());
 
     result.fold(
       (failure) => emit(state.copyWith(
@@ -150,6 +155,149 @@ class PaywallBloc extends Bloc<PaywallEvent, PaywallState> {
   @override
   Future<void> close() async {
     await _purchaseSubscription?.cancel();
+    return super.close();
+  }
+}
+
+//new bloc
+
+// class SubscriptionBloc extends Bloc<PaywallEvent, IAPState> {
+//   final SubscriptionRepository _subscriptionRepository;
+
+//   SubscriptionBloc({required SubscriptionRepository subscriptionRepository})
+//       : _subscriptionRepository = subscriptionRepository,
+//         super(IAPInitialState()) {
+//     on<CheckIAPAvailabilityEvent>(_onCheckAvailability);
+//     on<FetchProductsEvent>(_onFetchProducts);
+//   }
+
+//   Future<void> _onCheckAvailability(
+//       CheckIAPAvailabilityEvent event, Emitter<IAPState> emit) async {
+//     emit(IAPAvailabilityLoadingState());
+//     final result = await _subscriptionRepository.isAvailable();
+
+//     result.fold((failure) => emit(IAPErrorState('IAP not available')),
+//         (isAvailable) => emit(IAPAvailableState(isAvailable)));
+//   }
+
+//   Future<void> _onFetchProducts(
+//       FetchProductsEvent event, Emitter<IAPState> emit) async {
+//     emit(ProductsFetchingState());
+//     final result =
+//         await _subscriptionRepository.fetchProducts(event.productIds);
+
+//     log(result.toString());
+
+//     result.fold((failure) => emit(IAPErrorState('Failed to fetch products')),
+//         (products) {
+//       emit(ProductsFetchedState(products));
+//       log(products.last.title.toString());
+//     });
+//   }
+// }
+
+
+
+
+class SubscriptionBloc extends Bloc<PaywallEvent, IAPState> {
+  final CheckSubscriptionAvailabilityUseCase _checkAvailabilityUseCase;
+  final FetchProductsUseCase _fetchProductsUseCase;
+  final PurchaseProductUseCase _purchaseProductUseCase;
+  final ListenToPurchaseUpdatesUseCase _listenToPurchaseUpdatesUseCase;
+  final RestorePurchasesUseCase _restorePurchasesUseCase;
+  final DisposeSubscriptionUseCase _disposeSubscriptionUseCase;
+
+  StreamSubscription<List<PurchaseDetails>>? _purchaseUpdatesSubscription;
+
+  SubscriptionBloc({
+    required CheckSubscriptionAvailabilityUseCase checkAvailabilityUseCase,
+    required FetchProductsUseCase fetchProductsUseCase,
+    required PurchaseProductUseCase purchaseProductUseCase,
+    required ListenToPurchaseUpdatesUseCase listenToPurchaseUpdatesUseCase,
+    required RestorePurchasesUseCase restorePurchasesUseCase,
+    required DisposeSubscriptionUseCase disposeSubscriptionUseCase,
+  })  : _checkAvailabilityUseCase = checkAvailabilityUseCase,
+        _fetchProductsUseCase = fetchProductsUseCase,
+        _purchaseProductUseCase = purchaseProductUseCase,
+        _listenToPurchaseUpdatesUseCase = listenToPurchaseUpdatesUseCase,
+        _restorePurchasesUseCase = restorePurchasesUseCase,
+        _disposeSubscriptionUseCase = disposeSubscriptionUseCase,
+        super(IAPInitialState()) {
+    on<CheckIAPAvailabilityEvent>(_onCheckAvailability);
+    on<FetchProductsEvent>(_onFetchProducts);
+    on<PurchaseProductEventNew>(_onPurchaseProduct);
+    on<StartListeningToPurchaseUpdatesEvent>(_onStartListeningToPurchaseUpdates);
+    on<RestorePurchasesEvent>(_onRestorePurchases);
+    on<DisposeSubscriptionEvent>(_onDisposeSubscription);
+  }
+
+  Future<void> _onCheckAvailability(
+      CheckIAPAvailabilityEvent event, Emitter<IAPState> emit) async {
+    emit(IAPAvailabilityLoadingState());
+    final result = await _checkAvailabilityUseCase(NoParams());
+
+    result.fold(
+      (failure) => emit(IAPErrorState('IAP not available')),
+      (isAvailable) => emit(IAPAvailableState(isAvailable)),
+    );
+  }
+
+  Future<void> _onFetchProducts(
+      FetchProductsEvent event, Emitter<IAPState> emit) async {
+    emit(ProductsFetchingState());
+    final result = await _fetchProductsUseCase(FetchProductsParams(event.productIds));
+
+    result.fold(
+      (failure) => emit(IAPErrorState('Failed to fetch products')),
+      (products) => emit(ProductsFetchedState(products)),
+    );
+  }
+
+  Future<void> _onPurchaseProduct(
+      PurchaseProductEventNew event, Emitter<IAPState> emit) async {
+    emit(PurchaseProcessingState());
+    final result = await _purchaseProductUseCase(PurchaseParams(event.productDetails));
+
+    result.fold(
+      (failure) => emit(IAPErrorState('Purchase failed')),
+      (success) => emit(PurchaseSuccessState(success)),
+    );
+  }
+
+  void _onStartListeningToPurchaseUpdates(
+      StartListeningToPurchaseUpdatesEvent event, Emitter<IAPState> emit)async {
+    final result = await _listenToPurchaseUpdatesUseCase(NoParams());
+
+    result.fold(
+      (failure) => emit(IAPErrorState('Failed to listen for purchases')),
+      (stream) {
+        _purchaseUpdatesSubscription = stream.listen((purchaseDetails) {
+          add(PurchaseUpdatedNew(purchaseDetails));
+        });
+      },
+    );
+  }
+
+  Future<void> _onRestorePurchases(
+      RestorePurchasesEvent event, Emitter<IAPState> emit) async {
+    emit(RestoringPurchasesState());
+    final result = await _restorePurchasesUseCase(NoParams());
+
+    result.fold(
+      (failure) => emit(IAPErrorState('Failed to restore purchases')),
+      (_) => emit(PurchasesRestoredState()),
+    );
+  }
+
+  Future<void> _onDisposeSubscription(
+      DisposeSubscriptionEvent event, Emitter<IAPState> emit) async {
+    _purchaseUpdatesSubscription?.cancel();
+    await _disposeSubscriptionUseCase(NoParams());
+  }
+
+  @override
+  Future<void> close() {
+    _purchaseUpdatesSubscription?.cancel();
     return super.close();
   }
 }

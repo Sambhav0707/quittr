@@ -75,8 +75,6 @@ void main() async {
   //       .showNotificationDialog(null); // Check for notifications
   // });
 
-
-  
   runApp(QuittrApp(
     navigatorKey: di.sl(),
   ));
@@ -102,6 +100,20 @@ class QuittrApp extends StatelessWidget {
         BlocProvider(create: (_) => BreathingBloc()),
         BlocProvider(create: (_) => CravingControllBloc()),
         BlocProvider(create: (_) => NotificationBloc(di.sl(), di.sl())),
+        BlocProvider(
+            create: (_) => SubscriptionBloc(
+             
+              checkAvailabilityUseCase: di.sl(),
+             disposeSubscriptionUseCase: di.sl(),
+             fetchProductsUseCase: di.sl(),
+             listenToPurchaseUpdatesUseCase: di.sl(),
+             purchaseProductUseCase: di.sl(),
+             restorePurchasesUseCase: di.sl()
+
+
+
+                 
+                ))
       ],
       child: BlocBuilder<ThemeCubit, bool>(
         builder: (context, isDarkMode) {
@@ -132,7 +144,7 @@ class QuittrApp extends StatelessWidget {
               '/craving-controll-screen': (context) => const CravingControll(),
               '/detox-screen': (context) => const DetoxScreen(),
               '/onboarding-quiz': (context) => const QuizQuestionsScreen(),
-              '/get-started' : (context) => const GetStartedScreen(),
+              '/get-started': (context) => const GetStartedScreen(),
             },
           );
         },

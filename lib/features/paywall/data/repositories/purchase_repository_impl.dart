@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_inapp_purchase/flutter_inapp_purchase.dart';
@@ -83,6 +85,7 @@ class SubscriptionRepositoryImpl implements SubscriptionRepository {
   Future<Either<Failure, bool>> isAvailable() async {
     try {
       final result = await dataSource.isAvailable();
+      print("Google Play Billing Available: $result");
       return Right(result);
     } on ConnectionFailedFailure catch (e) {
       return Left(ConnectionFailedFailure(e.message));
@@ -94,6 +97,10 @@ class SubscriptionRepositoryImpl implements SubscriptionRepository {
       Set<String> productIds) async {
     try {
       final response = await dataSource.fetchProducts(productIds);
+      for (var product in response.productDetails) {
+        print(product.id);
+      }
+      ;
 
       if (response.notFoundIDs.isNotEmpty) {
         return Left(ProductNotFoundFailure("products not found"));
@@ -113,6 +120,7 @@ class SubscriptionRepositoryImpl implements SubscriptionRepository {
   Future<Either<Failure, bool>> purchase(ProductDetails productDetails) async {
     try {
       final result = await dataSource.purchase(productDetails);
+      print(" this is the id when buying ${productDetails.id}");
       return Right(result);
     } on PurchaseFailedFailure catch (e) {
       return Left(PurchaseFailedFailure(e.message.toString()));

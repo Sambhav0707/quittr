@@ -161,44 +161,6 @@ class PaywallBloc extends Bloc<PaywallEvent, PaywallState> {
 
 //new bloc
 
-// class SubscriptionBloc extends Bloc<PaywallEvent, IAPState> {
-//   final SubscriptionRepository _subscriptionRepository;
-
-//   SubscriptionBloc({required SubscriptionRepository subscriptionRepository})
-//       : _subscriptionRepository = subscriptionRepository,
-//         super(IAPInitialState()) {
-//     on<CheckIAPAvailabilityEvent>(_onCheckAvailability);
-//     on<FetchProductsEvent>(_onFetchProducts);
-//   }
-
-//   Future<void> _onCheckAvailability(
-//       CheckIAPAvailabilityEvent event, Emitter<IAPState> emit) async {
-//     emit(IAPAvailabilityLoadingState());
-//     final result = await _subscriptionRepository.isAvailable();
-
-//     result.fold((failure) => emit(IAPErrorState('IAP not available')),
-//         (isAvailable) => emit(IAPAvailableState(isAvailable)));
-//   }
-
-//   Future<void> _onFetchProducts(
-//       FetchProductsEvent event, Emitter<IAPState> emit) async {
-//     emit(ProductsFetchingState());
-//     final result =
-//         await _subscriptionRepository.fetchProducts(event.productIds);
-
-//     log(result.toString());
-
-//     result.fold((failure) => emit(IAPErrorState('Failed to fetch products')),
-//         (products) {
-//       emit(ProductsFetchedState(products));
-//       log(products.last.title.toString());
-//     });
-//   }
-// }
-
-
-
-
 class SubscriptionBloc extends Bloc<PaywallEvent, IAPState> {
   final CheckSubscriptionAvailabilityUseCase _checkAvailabilityUseCase;
   final FetchProductsUseCase _fetchProductsUseCase;
@@ -226,9 +188,27 @@ class SubscriptionBloc extends Bloc<PaywallEvent, IAPState> {
     on<CheckIAPAvailabilityEvent>(_onCheckAvailability);
     on<FetchProductsEvent>(_onFetchProducts);
     on<PurchaseProductEventNew>(_onPurchaseProduct);
-    on<StartListeningToPurchaseUpdatesEvent>(_onStartListeningToPurchaseUpdates);
+    on<StartListeningToPurchaseUpdatesEvent>(
+        _onStartListeningToPurchaseUpdates);
     on<RestorePurchasesEvent>(_onRestorePurchases);
     on<DisposeSubscriptionEvent>(_onDisposeSubscription);
+
+    // Add the handler for PurchaseUpdatedNew
+    on<PurchaseUpdatedNew>(_onPurchaseUpdated);
+  }
+
+  void _onPurchaseUpdated(PurchaseUpdatedNew event, Emitter<IAPState> emit) {
+    // Handle the purchase updates here
+    for (var purchaseDetail in event.purchaseDetails) {
+      if (purchaseDetail.status == PurchaseStatus.purchased) {
+        // Handle successful purchase
+        emit(PurchaseSuccessState(true)); // or whatever logic you need
+      } else if (purchaseDetail.status == PurchaseStatus.error) {
+        emit(
+            IAPErrorState('Purchase failed: ${purchaseDetail.error?.message}'));
+      }
+      // Add any additional handling for pending or restored purchases if needed
+    }
   }
 
   Future<void> _onCheckAvailability(
@@ -245,7 +225,8 @@ class SubscriptionBloc extends Bloc<PaywallEvent, IAPState> {
   Future<void> _onFetchProducts(
       FetchProductsEvent event, Emitter<IAPState> emit) async {
     emit(ProductsFetchingState());
-    final result = await _fetchProductsUseCase(FetchProductsParams(event.productIds));
+    final result =
+        await _fetchProductsUseCase(FetchProductsParams(event.productIds));
 
     result.fold(
       (failure) => emit(IAPErrorState('Failed to fetch products')),
@@ -256,7 +237,8 @@ class SubscriptionBloc extends Bloc<PaywallEvent, IAPState> {
   Future<void> _onPurchaseProduct(
       PurchaseProductEventNew event, Emitter<IAPState> emit) async {
     emit(PurchaseProcessingState());
-    final result = await _purchaseProductUseCase(PurchaseParams(event.productDetails));
+    final result =
+        await _purchaseProductUseCase(PurchaseParams(event.productDetails));
 
     result.fold(
       (failure) => emit(IAPErrorState('Purchase failed')),
@@ -265,7 +247,8 @@ class SubscriptionBloc extends Bloc<PaywallEvent, IAPState> {
   }
 
   void _onStartListeningToPurchaseUpdates(
-      StartListeningToPurchaseUpdatesEvent event, Emitter<IAPState> emit)async {
+      StartListeningToPurchaseUpdatesEvent event,
+      Emitter<IAPState> emit) async {
     final result = await _listenToPurchaseUpdatesUseCase(NoParams());
 
     result.fold(

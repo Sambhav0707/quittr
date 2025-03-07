@@ -85,7 +85,13 @@ class SubscriptionDataSourceImpl implements SubscriptionDataSource {
 
   @override
   Future<ProductDetailsResponse> fetchProducts(Set<String> productIds) async {
-    return _inAppPurchase.queryProductDetails(productIds);
+    // final ProductDetailsResponse response;
+    // return response = await _inAppPurchase.queryProductDetails(productIds);
+    final response = await _inAppPurchase.queryProductDetails(productIds);
+    if (response.notFoundIDs.isNotEmpty) {
+      throw Exception("Products not found: ${response.notFoundIDs}");
+    }
+    return response;
   }
 
   @override
@@ -118,6 +124,7 @@ class SubscriptionDataSourceImpl implements SubscriptionDataSource {
       if (purchaseDetails.status == PurchaseStatus.pending) {
         _showPendingUI();
       } else if (purchaseDetails.status == PurchaseStatus.error) {
+        
         _handleError(purchaseDetails.error!);
       } else if (purchaseDetails.status == PurchaseStatus.purchased ||
           purchaseDetails.status == PurchaseStatus.restored) {
@@ -160,10 +167,3 @@ class SubscriptionDataSourceImpl implements SubscriptionDataSource {
     _purchaseSubscription?.cancel();
   }
 }
-
-
-
-
-
-
-

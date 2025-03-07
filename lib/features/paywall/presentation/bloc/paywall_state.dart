@@ -72,49 +72,10 @@ class InitializeSubscriptionSuccess extends SubscriptionState {
   const InitializeSubscriptionSuccess({required this.response});
 }
 
-class InitializeSubscriptionInitial extends SubscriptionState {
-
-}
+class InitializeSubscriptionInitial extends SubscriptionState {}
 
 // Get Subscription Products
 // States
-// abstract class IAPState extends Equatable {
-//   @override
-//   List<Object> get props => [];
-// }
-
-// class IAPInitialState extends IAPState {}
-
-// class IAPAvailabilityLoadingState extends IAPState {}
-// class IAPAvailableState extends IAPState {
-//   final bool isAvailable;
-
-//   IAPAvailableState(this.isAvailable);
-
-//   @override
-//   List<Object> get props => [isAvailable];
-// }
-
-// class ProductsFetchingState extends IAPState {}
-// class ProductsFetchedState extends IAPState {
-//   final List<ProductDetails> products;
-
-//   ProductsFetchedState(this.products);
-
-//   @override
-//   List<Object> get props => [products];
-// }
-
-// class IAPErrorState extends IAPState {
-//   final String errorMessage;
-
-//   IAPErrorState(this.errorMessage);
-
-//   @override
-//   List<Object> get props => [errorMessage];
-// }
-
-
 
 abstract class IAPState extends Equatable {
   @override

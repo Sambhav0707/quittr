@@ -83,6 +83,39 @@ class _RelapseTrackerScreenState extends State<RelapseTrackerScreen> {
     super.dispose();
   }
 
+  double daysPassedSinceRelapse(DateTime lastRelapsedDate) {
+    final today = DateTime.now();
+    return today.difference(lastRelapsedDate).inDays.toDouble();
+  }
+
+  double calculateProgressPercentage(DateTime lastRelapsedDate, int totalDays) {
+    double daysPassed = daysPassedSinceRelapse(lastRelapsedDate);
+    double progress = daysPassed / totalDays;
+    return progress.clamp(0.0, 1.0); // Ensures the value stays between 0 and 1
+  }
+
+  void _showSignOutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('RESET'),
+        content: const Text('Are you sure you want to reset the whole Timer?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          FilledButton(
+            onPressed: () {
+              PrefUtils().resetTimer();
+            },
+            child: const Text('Reset'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<RelapseTrackerBloc, RelapseTrackerState>(
@@ -96,7 +129,6 @@ class _RelapseTrackerScreenState extends State<RelapseTrackerScreen> {
                     _relapseTrackerBloc.add(RelapseTrackerStartTimerEvent());
                   },
                   label: Text("Get started"),
-                  // icon: Icon(Icons.timer_outlined),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(100),
                   ),
@@ -143,7 +175,6 @@ class _RelapseTrackerScreenState extends State<RelapseTrackerScreen> {
                 children: [
                   const SizedBox(height: 16),
                   // Main streak display
-
                   BlocBuilder<RelapseTrackerBloc, RelapseTrackerState>(
                       builder: (context, state) {
                     Duration elapsedTime = Duration.zero;
@@ -198,8 +229,18 @@ class _RelapseTrackerScreenState extends State<RelapseTrackerScreen> {
                         onTap: () {
                           showModalBottomSheet(
                             context: context,
+                            isScrollControlled: true, // Allow full height
                             builder: (context) {
-                              return PledgeScreen();
+                              return DraggableScrollableSheet(
+                                initialChildSize:
+                                    0.7, // Set to 70% of the screen height
+                                minChildSize: 0.4,
+                                maxChildSize: 1,
+                                expand: false,
+                                builder: (context, scrollController) {
+                                  return PledgeScreen(); // Your PledgeScreen
+                                },
+                              );
                             },
                           );
                         },
@@ -215,7 +256,7 @@ class _RelapseTrackerScreenState extends State<RelapseTrackerScreen> {
                         icon: Icons.refresh_outlined,
                         label: 'Reset',
                         onTap: () {
-                          // TODO: Implement reset
+                          _showSignOutDialog(context);
                         },
                       ),
                       RelapseActionButton(
@@ -231,8 +272,13 @@ class _RelapseTrackerScreenState extends State<RelapseTrackerScreen> {
                   // Progress bars
                   ProgressBar(
                     label: 'Brain Rewiring',
-                    progress: 0.31,
-                    progressText: '31%',
+
+                    progress: calculateProgressPercentage(
+                        DateTime.parse(
+                            PrefUtils().getRelapsedDates().last.toString()),
+                        90),
+                    progressText:
+                        "${(calculateProgressPercentage(DateTime.parse(PrefUtils().getRelapsedDates().last.toString()), 90) * 100).toStringAsFixed(1)} %", // Display percentage with 2 decimal places
                   ),
                   const SizedBox(height: 16),
                   ProgressBar(
@@ -412,7 +458,7 @@ class _RelapseTrackerScreenState extends State<RelapseTrackerScreen> {
                                 .psychology_outlined, // Brain/mind control related icon
                             iconColor: Colors.teal
                                 .shade600, // Teal represents control/calmness
-                            title: 'Craving Controll',
+                            title: 'Craving Control',
                             onTap: () => Navigator.pushNamed(
                               context,
                               '/craving-controll-screen',
@@ -445,7 +491,7 @@ class _RelapseTrackerScreenState extends State<RelapseTrackerScreen> {
                             icon: Icons
                                 .stars, // Better represents success stories
                             iconColor: Colors.amber.shade700,
-                            title: 'Sucesss Stories',
+                            title: 'Success Stories',
                             onTap: () {},
                           ),
                         ],

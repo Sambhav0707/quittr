@@ -48,14 +48,14 @@ class PurchaseProductEvent extends PaywallEvent {
   List<Object> get props => [productId];
 }
 
-class PurchaseUpdated extends PaywallEvent {
-  final PurchasedItem? purchaseDetails;
+// class PurchaseUpdated extends PaywallEvent {
+//   final PurchasedItem? purchaseDetails;
 
-  const PurchaseUpdated(this.purchaseDetails);
+//   const PurchaseUpdated(this.purchaseDetails);
 
-  @override
-  List<Object?> get props => [purchaseDetails];
-}
+//   @override
+//   List<Object?> get props => [purchaseDetails];
+// }
 
 class VerifySubscriptionEvent extends PaywallEvent {
   const VerifySubscriptionEvent();

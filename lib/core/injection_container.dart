@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_inapp_purchase/flutter_inapp_purchase.dart';
+// import 'package:flutter_inapp_purchase/flutter_inapp_purchase.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_it/get_it.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -87,7 +87,7 @@ Future<void> init() async {
 
   sl.registerLazySingleton(() => FlutterLocalNotificationsPlugin());
 
-  sl.registerLazySingleton(() => FlutterInappPurchase.instance);
+  // sl.registerLazySingleton(() => FlutterInappPurchase.instance);
 
   sl.registerLazySingleton(() => InAppPurchase.instance);
 
@@ -142,27 +142,27 @@ Future<void> init() async {
   // Paywall
   sl.registerLazySingleton(
     () => PaywallBloc(
-      initializePurchases: sl(),
-      getProducts: sl(),
-      purchaseProduct: sl(),
+      // initializePurchases: sl(),
+      // getProducts: sl(),
+      // purchaseProduct: sl(),
       verifySubscription: sl(),
-      getPurchaseUpdates: sl(),
+      // getPurchaseUpdates: sl(),
     ),
   );
 
-  sl.registerLazySingleton(() => InitializePurchases(sl()));
-  sl.registerLazySingleton(() => GetSubscriptions(sl()));
-  sl.registerLazySingleton(() => PurchaseProduct(sl()));
+  // sl.registerLazySingleton(() => InitializePurchases(sl()));
+  // sl.registerLazySingleton(() => GetSubscriptions(sl()));
+  // sl.registerLazySingleton(() => PurchaseProduct(sl()));
   sl.registerLazySingleton(() => VerifySubscription(sl()));
-  sl.registerLazySingleton(() => GetPurchaseUpdates(sl()));
+  // sl.registerLazySingleton(() => GetPurchaseUpdates(sl()));
 
-  // Repositories
-  sl.registerLazySingleton<PurchaseRepository>(
-    () => PurchaseRepositoryImpl(dataSource: sl()),
-  );
-  sl.registerLazySingleton<PurchaseDataSource>(
-    () => PurchaseDataSourceImpl(),
-  );
+  // // Repositories
+  // sl.registerLazySingleton<PurchaseRepository>(
+  //   () => PurchaseRepositoryImpl(dataSource: sl()),
+  // );
+  // sl.registerLazySingleton<PurchaseDataSource>(
+  //   () => PurchaseDataSourceImpl(),
+  // );
 
   //Feature :- Motivation
 

@@ -16,6 +16,8 @@ import 'package:quittr/features/craving%20control/presentation/bloc/craving_cont
 import 'package:quittr/features/craving%20control/presentation/screens/craving_controll.dart';
 import 'package:quittr/features/detox/presentation/screens/detox_screen.dart';
 import 'package:quittr/features/home/presentation/screens/home_screen.dart';
+import 'package:quittr/features/library/domain/entities/podcast.dart';
+import 'package:quittr/features/library/presentation/bloc/podcast_player_bloc.dart';
 import 'package:quittr/features/meditate/presentation/screens/meditate_screen.dart'
     as meditate;
 import 'package:quittr/features/motivaton/presentation/screens/motivation_screen.dart';
@@ -102,18 +104,13 @@ class QuittrApp extends StatelessWidget {
         BlocProvider(create: (_) => NotificationBloc(di.sl(), di.sl())),
         BlocProvider(
             create: (_) => SubscriptionBloc(
-             
-              checkAvailabilityUseCase: di.sl(),
-             disposeSubscriptionUseCase: di.sl(),
-             fetchProductsUseCase: di.sl(),
-             listenToPurchaseUpdatesUseCase: di.sl(),
-             purchaseProductUseCase: di.sl(),
-             restorePurchasesUseCase: di.sl()
-
-
-
-                 
-                ))
+                checkAvailabilityUseCase: di.sl(),
+                disposeSubscriptionUseCase: di.sl(),
+                fetchProductsUseCase: di.sl(),
+                listenToPurchaseUpdatesUseCase: di.sl(),
+                purchaseProductUseCase: di.sl(),
+                restorePurchasesUseCase: di.sl())),
+        // BlocProvider(create: (_) => PodcastPlayerBloc(getPodcasts: di.sl()))
       ],
       child: BlocBuilder<ThemeCubit, bool>(
         builder: (context, isDarkMode) {
@@ -145,6 +142,7 @@ class QuittrApp extends StatelessWidget {
               '/detox-screen': (context) => const DetoxScreen(),
               '/onboarding-quiz': (context) => const QuizQuestionsScreen(),
               '/get-started': (context) => const GetStartedScreen(),
+             
             },
           );
         },

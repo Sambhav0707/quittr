@@ -9,6 +9,11 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:quittr/core/presentation/theme/cubit/theme_cubit.dart';
+import 'package:quittr/features/library/data/data%20sources/podcast_data_source.dart';
+import 'package:quittr/features/library/data/repository/podcast_repository_impl.dart';
+import 'package:quittr/features/library/domain/repository/podcast_repository.dart';
+import 'package:quittr/features/library/domain/usecases/get_podcasts.dart';
+import 'package:quittr/features/library/presentation/bloc/podcast_player_bloc.dart';
 import 'package:quittr/features/meditate/data/datasources/meditate_loacal_data_source.dart';
 import 'package:quittr/features/meditate/data/repository/quotes_repository_impl.dart';
 import 'package:quittr/features/meditate/domain/repository/quotes_repository.dart';
@@ -223,4 +228,15 @@ Future<void> init() async {
         listenToPurchaseUpdatesUseCase: sl(),
         restorePurchasesUseCase: sl(),
       ));
+
+  // podcast
+
+  sl.registerLazySingleton<PodcastDataSource>(() => PodcastDataSourceImpl());
+
+  sl.registerLazySingleton<PodcastRepository>(
+      () => PodcastRepositoryImpl(sl()));
+
+  sl.registerLazySingleton(() => GetPodcasts(podcastRepository: sl()));
+
+  sl.registerLazySingleton(() => PodcastPlayerBloc(getPodcasts: sl()));
 }

@@ -124,13 +124,14 @@ class SubscriptionDataSourceImpl implements SubscriptionDataSource {
       if (purchaseDetails.status == PurchaseStatus.pending) {
         _showPendingUI();
       } else if (purchaseDetails.status == PurchaseStatus.error) {
-        
         _handleError(purchaseDetails.error!);
       } else if (purchaseDetails.status == PurchaseStatus.purchased ||
           purchaseDetails.status == PurchaseStatus.restored) {
         bool valid = await _verifyPurchase(purchaseDetails);
         if (valid) {
           _deliverProduct(purchaseDetails);
+        } else if (purchaseDetails.status == PurchaseStatus.restored) {
+          await restorePurchases();
         } else {
           _handleInvalidPurchase(purchaseDetails);
         }

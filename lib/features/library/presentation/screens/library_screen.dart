@@ -126,7 +126,8 @@ class LibraryScreen extends StatelessWidget {
                 crossAxisCount: 2,
                 mainAxisSpacing: 16,
                 crossAxisSpacing: 16,
-                childAspectRatio: 0.85,
+                childAspectRatio:
+                    0.9, // Increased from 0.85 to give more height
               ),
             ),
           ),
@@ -234,23 +235,26 @@ class _LibraryCardState extends State<_LibraryCard>
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(20),
+                  padding:
+                      const EdgeInsets.all(16), // Reduced padding from 20 to 16
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        padding: const EdgeInsets.all(12),
+                        padding: const EdgeInsets.all(
+                            10), // Reduced padding from 12 to 10
                         decoration: BoxDecoration(
                           color: widget.color.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(
+                              14), // Slightly reduced from 16
                         ),
                         child: Icon(
                           widget.icon,
-                          size: 28,
+                          size: 24, // Reduced from 28 to 24
                           color: widget.color,
                         ),
                       ),
-                      const Spacer(),
+                      const Spacer(flex: 1),
                       Text(
                         widget.title,
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -261,13 +265,18 @@ class _LibraryCardState extends State<_LibraryCard>
                       const SizedBox(height: 4),
                       Text(
                         widget.description,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              // Changed from bodyMedium to bodySmall
                               color: Theme.of(context)
                                   .colorScheme
                                   .onSurface
                                   .withOpacity(0.7),
                             ),
+                        maxLines: 2, // Limit to 2 lines max
+                        overflow: TextOverflow
+                            .ellipsis, // Add ellipsis if text overflows
                       ),
+                      const SizedBox(height: 4), // Add a small bottom padding
                     ],
                   ),
                 ),

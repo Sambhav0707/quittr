@@ -78,6 +78,8 @@ dependencies:
   flutter_local_notifications: ^18.0.1
   timezone: ^0.10.0
   in_app_purchase: ^3.2.1
+  # just_audio: ^0.9.46
+  audioplayers: ^6.4.0
 
   #for storage
   get_storage: ^2.1.1
@@ -145,3 +147,5 @@ flutter:
     - assets/images/icons/
     - assets/data/quotes.json
     - assets/animations/
+    - assets/audio/podcast_1.mp3
+    - assets/audio/podcast.mp3

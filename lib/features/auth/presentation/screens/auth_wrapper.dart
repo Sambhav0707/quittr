@@ -62,7 +62,7 @@ class AuthWrapper extends StatelessWidget {
         builder: (context, state) {
           if (state is AuthAuthenticated) {
             // Directly return HomeScreen if authenticated
-            return const PaywallScreen();
+            return const HomeScreen();
           }
           // Return GetStartedScreen if not authenticated
           return const GetStartedScreen();

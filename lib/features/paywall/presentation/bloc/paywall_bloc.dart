@@ -32,12 +32,12 @@ class PaywallBloc extends Bloc<PaywallEvent, PaywallState> {
     // required PurchaseProduct purchaseProduct,
     required VerifySubscription verifySubscription,
     // required GetPurchaseUpdates getPurchaseUpdates,
-  // })  : _initializePurchases = initializePurchases,
-  //       _getProducts = getProducts,
-  //       _purchaseProduct = purchaseProduct,
-   }) : _verifySubscription = verifySubscription ,
+    // })  : _initializePurchases = initializePurchases,
+    //       _getProducts = getProducts,
+    //       _purchaseProduct = purchaseProduct,
+  })  : _verifySubscription = verifySubscription,
         // _getPurchaseUpdates = getPurchaseUpdates,
-         super(const PaywallState.initial()) {
+        super(const PaywallState.initial()) {
     // on<InitializePaywall>(_onInitializePaywall);
     // on<LoadProducts>(_onLoadProducts);
     // on<PurchaseProductEvent>(_onPurchaseProduct);
@@ -202,11 +202,15 @@ class SubscriptionBloc extends Bloc<PaywallEvent, IAPState> {
     // Handle the purchase updates here
     for (var purchaseDetail in event.purchaseDetails) {
       if (purchaseDetail.status == PurchaseStatus.purchased) {
+        log(purchaseDetail.productID);
         // Handle successful purchase
         emit(PurchaseSuccessState(true)); // or whatever logic you need
       } else if (purchaseDetail.status == PurchaseStatus.error) {
         emit(
             IAPErrorState('Purchase failed: ${purchaseDetail.error?.message}'));
+      } else if (purchaseDetail.status == PurchaseStatus.restored) {
+        
+        
       }
       // Add any additional handling for pending or restored purchases if needed
     }

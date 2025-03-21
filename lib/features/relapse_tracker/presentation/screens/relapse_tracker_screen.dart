@@ -17,40 +17,11 @@ class RelapseTrackerScreen extends StatefulWidget {
 }
 
 class _RelapseTrackerScreenState extends State<RelapseTrackerScreen> {
-  // @override
-  // void initState() {
-  //   final user = (context.read<AuthBloc>().state as AuthAuthenticated).user;
-
-  //   context.read<RelapseTrackerBloc>().add(
-  //         RelapseTrackerPledgeStartTimerEvent(
-  //             lastElapsedTime:
-  //                 user.isNewUser ? Duration.zero : getLastElapsedTime()),
-  //       );
-  //   super.initState();
-  // }
-
-  // Duration getLastElapsedTime() {
-  //   // Fetch last elapsed time from backend or state management
-  //   return PrefUtils().getLastRelapsedTime();
-  // }
-
-  // @override
-  // void dispose() {
-  //   // Save current elapsed time to storage when disposing
-  //   final bloc = context.read<RelapseTrackerBloc>();
-  //   if (bloc.state is RelapseTrackerTimerRunning) {
-  //     PrefUtils().setLastRelapsedTime(
-  //         (bloc.state as RelapseTrackerTimerRunning).elapsedTime);
-  //   }
-  //   // Stop the timer
-  //   bloc.add(RelapseTrackerPledgeEndTimerEvent());
-  //   bloc.close();
-  //   super.dispose();
-  // }
+  
 
   late RelapseTrackerBloc _relapseTrackerBloc;
 
-  // late bool user;
+ 
 
   @override
   void initState() {
@@ -88,8 +59,22 @@ class _RelapseTrackerScreenState extends State<RelapseTrackerScreen> {
     return today.difference(lastRelapsedDate).inDays.toDouble();
   }
 
-  double calculateProgressPercentage(DateTime lastRelapsedDate, int totalDays) {
-    double daysPassed = daysPassedSinceRelapse(lastRelapsedDate);
+  // double calculateProgressPercentage(DateTime lastRelapsedDate, int totalDays) {
+
+  //   double daysPassed = daysPassedSinceRelapse(lastRelapsedDate);
+  //   double progress = daysPassed / totalDays;
+  //   return progress.clamp(0.0, 1.0); // Ensures the value stays between 0 and 1
+  // }
+
+  double calculateProgressPercentage(
+      List<DateTime> relapseDates, int totalDays) {
+    if (relapseDates.isEmpty) {
+      return 0.0; // Return 0 progress if no relapse dates exist
+    }
+
+    DateTime lastRelapsedDate = relapseDates.last;
+    double daysPassed =
+        DateTime.now().difference(lastRelapsedDate).inDays.toDouble();
     double progress = daysPassed / totalDays;
     return progress.clamp(0.0, 1.0); // Ensures the value stays between 0 and 1
   }
@@ -270,15 +255,25 @@ class _RelapseTrackerScreenState extends State<RelapseTrackerScreen> {
                   ),
                   const SizedBox(height: 32),
                   // Progress bars
+                  // ProgressBar(
+                  //   label: 'Brain Rewiring',
+
+                  //   progress: calculateProgressPercentage(
+                  //       DateTime.parse(
+                  //           PrefUtils().getRelapsedDates().last.toString()),
+                  //       90),
+                  //   progressText:
+                  //       "${(calculateProgressPercentage(DateTime.parse(PrefUtils().getRelapsedDates().last.toString()), 90) * 100).toStringAsFixed(1)} %", // Display percentage with 2 decimal places
+                  // ),
+
                   ProgressBar(
                     label: 'Brain Rewiring',
-
                     progress: calculateProgressPercentage(
-                        DateTime.parse(
-                            PrefUtils().getRelapsedDates().last.toString()),
+                        PrefUtils().getRelapsedDates(), // Pass the whole list
                         90),
                     progressText:
-                        "${(calculateProgressPercentage(DateTime.parse(PrefUtils().getRelapsedDates().last.toString()), 90) * 100).toStringAsFixed(1)} %", // Display percentage with 2 decimal places
+                        "${(calculateProgressPercentage(PrefUtils().getRelapsedDates(), // Pass the whole list
+                            90) * 100).toStringAsFixed(1)} %",
                   ),
                   const SizedBox(height: 16),
                   ProgressBar(
